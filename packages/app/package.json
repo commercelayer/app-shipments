@@ -17,7 +17,7 @@
   "dependencies": {
     "@commercelayer/app-elements": "^0.0.37",
     "@commercelayer/app-elements-hook-form": "^0.0.37",
-    "@commercelayer/sdk": "5.4.0",
+    "@commercelayer/sdk": "5.4.1",
     "@hookform/resolvers": "^3.1.0",
     "lodash": "^4.17.21",
     "query-string": "^8.1.0",
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@commercelayer/eslint-config-ts-react": "^1.0.0",
     "@types/lodash": "^4.14.195",
-    "@types/react": "^18.2.8",
+    "@types/react": "^18.2.9",
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
     "eslint": "^8.42.0",
