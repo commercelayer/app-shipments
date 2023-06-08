@@ -8,5 +8,9 @@ export const appRoutes = {
   home: {
     path: '/',
     makePath: () => '/'
+  },
+  details: {
+    path: '/details/:shipmentId',
+    makePath: (shipmentId: string) => `/details/${shipmentId}`
   }
 }
