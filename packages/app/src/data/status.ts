@@ -1,3 +1,4 @@
+import type { BadgeVariant } from '@commercelayer/app-elements/dist/ui/atoms/Badge'
 import type { IconProps } from '@commercelayer/app-elements/dist/ui/atoms/Icon'
 import type { Shipment } from '@commercelayer/sdk'
 
@@ -6,6 +7,7 @@ interface DisplayStatus {
   label: string
   icon: IconProps['name']
   color: IconProps['background']
+  badgeVariant: BadgeVariant
 }
 
 export function getDisplayStatus(shipment: Shipment): DisplayStatus {
@@ -15,7 +17,8 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         status: shipment.status,
         label: 'Picking',
         icon: 'arrowDown',
-        color: 'orange'
+        color: 'orange',
+        badgeVariant: 'warning-solid'
       }
 
     case 'packing':
@@ -23,7 +26,8 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         status: shipment.status,
         label: 'Packing',
         icon: 'package',
-        color: 'orange'
+        color: 'orange',
+        badgeVariant: 'warning-solid'
       }
 
     case 'ready_to_ship':
@@ -31,7 +35,8 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         status: shipment.status,
         label: 'Ready to ship',
         icon: 'arrowUpRight',
-        color: 'orange'
+        color: 'orange',
+        badgeVariant: 'warning-solid'
       }
 
     case 'on_hold':
@@ -39,7 +44,8 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         status: shipment.status,
         label: 'On hold',
         icon: 'hourglass',
-        color: 'orange'
+        color: 'orange',
+        badgeVariant: 'warning-solid'
       }
 
     case 'shipped':
@@ -47,7 +53,8 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         status: shipment.status,
         label: 'Shipped',
         icon: 'check',
-        color: 'green'
+        color: 'green',
+        badgeVariant: 'success-solid'
       }
 
     default:
@@ -55,7 +62,8 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         status: shipment.status,
         label: shipment.status,
         icon: 'warning',
-        color: 'gray'
+        color: 'gray',
+        badgeVariant: 'secondary-solid'
       }
   }
 }
