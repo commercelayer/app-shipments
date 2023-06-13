@@ -1,3 +1,6 @@
+import { ShipmentAddresses } from '#components/ShipmentAddresses'
+import { ShipmentSteps } from '#components/ShipmentSteps'
+import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
 import {
   Button,
@@ -46,7 +49,7 @@ export function ShipmentDetails(): JSX.Element {
   }
 
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  const pageTitle = `${shipment.number}`
+  const pageTitle = `${shipment.stock_location?.name} #${shipment.number}`
 
   return (
     <PageLayout
@@ -55,8 +58,8 @@ export function ShipmentDetails(): JSX.Element {
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>
       }
       description={
-        <SkeletonTemplate isLoading={isLoading}>{`Placed on ${formatDate({
-          isoDate: shipment.created_at ?? '',
+        <SkeletonTemplate isLoading={isLoading}>{`Updated on ${formatDate({
+          isoDate: shipment.updated_at,
           timezone: user?.timezone,
           format: 'full'
         })}`}</SkeletonTemplate>
@@ -66,7 +69,15 @@ export function ShipmentDetails(): JSX.Element {
       }}
     >
       <SkeletonTemplate isLoading={isLoading}>
-        <Spacer bottom='4'>{shipment.number}</Spacer>
+        <Spacer bottom='4'>
+          <ShipmentSteps shipment={shipment} />
+          <Spacer top='14'>
+            <ShipmentAddresses shipment={shipment} />
+          </Spacer>
+          <Spacer top='14'>
+            <ShipmentTimeline shipment={shipment} />
+          </Spacer>
+        </Spacer>
       </SkeletonTemplate>
     </PageLayout>
   )
