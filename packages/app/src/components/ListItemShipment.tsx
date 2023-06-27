@@ -17,6 +17,13 @@ export const ListItemShipment = withSkeletonTemplate<{ resource?: Shipment }>(
     const displayStatus = getDisplayStatus(resource)
     const { user } = useTokenProvider()
 
+    const belongsToOrderWithMultipleShipments =
+      (resource.order?.shipments ?? []).length > 1
+
+    const orderNumber = belongsToOrderWithMultipleShipments
+      ? resource.number
+      : resource.number?.split('/')[0]
+
     return (
       <Link href={appRoutes.details.makePath(resource.id)}>
         <ListItem
@@ -31,7 +38,7 @@ export const ListItemShipment = withSkeletonTemplate<{ resource?: Shipment }>(
         >
           <div>
             <Text tag='div' weight='semibold'>
-              {resource.number}
+              {resource.order?.market?.name} #{orderNumber}
             </Text>
             <Text size='small' tag='div' variant='info' weight='medium'>
               {formatDate({

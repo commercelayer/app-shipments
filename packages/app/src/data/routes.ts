@@ -9,8 +9,22 @@ export const appRoutes = {
     path: '/',
     makePath: () => '/'
   },
+  filters: {
+    path: '/filters',
+    makePath: (filters?: string) =>
+      hasFilterQuery(filters) ? `/filters/?${filters}` : `/filters`
+  },
+  list: {
+    path: '/list',
+    makePath: (filters?: string) =>
+      hasFilterQuery(filters) ? `/list/?${filters}` : `/list`
+  },
   details: {
-    path: '/details/:shipmentId',
-    makePath: (shipmentId: string) => `/details/${shipmentId}`
+    path: '/list/:shipmentId',
+    makePath: (shipmentId: string) => `/list/${shipmentId}`
   }
+}
+
+function hasFilterQuery(filters?: string): filters is string {
+  return Array.from(new URLSearchParams(filters)).length > 0
 }
