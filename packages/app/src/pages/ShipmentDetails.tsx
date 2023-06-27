@@ -1,4 +1,5 @@
 import { ShipmentAddresses } from '#components/ShipmentAddresses'
+import { ShipmentList } from '#components/ShipmentList'
 import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
@@ -71,6 +72,9 @@ export function ShipmentDetails(): JSX.Element {
       <SkeletonTemplate isLoading={isLoading}>
         <Spacer bottom='4'>
           <ShipmentSteps shipment={shipment} />
+          <Spacer top='14'>
+            <ShipmentList shipment={shipment} />
+          </Spacer>
           <Spacer top='14'>
             <ShipmentAddresses shipment={shipment} />
           </Spacer>
