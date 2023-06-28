@@ -1,10 +1,9 @@
+import { usePackingList } from '#hooks/usePackingList'
 import {
   A,
   Avatar,
-  Hr,
   Legend,
   ListItem,
-  Progress,
   ShipmentParcels,
   Spacer,
   Text,
@@ -18,6 +17,7 @@ import {
   type StockLineItem as StockLineItemResource
 } from '@commercelayer/sdk'
 import { useMemo } from 'react'
+import { ShipmentProgress } from './ShipmentProgress'
 
 interface Props {
   shipment: ShipmentResource
@@ -25,6 +25,8 @@ interface Props {
 
 export const ShipmentList = withSkeletonTemplate<Props>(
   ({ shipment, isLoading }) => {
+    const packingList = usePackingList(shipment)
+
     const skuCodes = useMemo(
       () => shipment.stock_line_items?.map((item) => item.sku_code) ?? [],
       [shipment]
@@ -42,20 +44,6 @@ export const ShipmentList = withSkeletonTemplate<Props>(
             }
           ]
         : null
-    )
-
-    const packingList = useMemo(
-      () =>
-        shipment.stock_line_items?.filter(
-          (stockLineItem) =>
-            shipment.parcels?.find((parcel) =>
-              parcel.parcel_line_items?.find(
-                (parcelLineItems) =>
-                  parcelLineItems.sku_code === stockLineItem.sku_code
-              )
-            ) == null
-        ) ?? [],
-      [shipment.stock_line_items, shipment.parcels]
     )
 
     const listStatus = useMemo(() => {
@@ -76,23 +64,6 @@ export const ShipmentList = withSkeletonTemplate<Props>(
       }
 
       return 'list'
-    }, [shipment])
-
-    const progress = useMemo(() => {
-      const max =
-        shipment.stock_line_items?.reduce(
-          (sum, item) => sum + item.quantity,
-          0
-        ) ?? 0
-
-      const value =
-        max - packingList.reduce((sum, item) => sum + item.quantity, 0) ?? 0
-
-      return {
-        value,
-        max,
-        percentage: (value / max) * 100
-      }
     }, [shipment])
 
     if (isLoading === true) {
@@ -118,14 +89,7 @@ export const ShipmentList = withSkeletonTemplate<Props>(
           }
         />
         {(listStatus === 'in_progress' || listStatus === 'packing') && (
-          <>
-            <Spacer top='4' bottom='4'>
-              <Progress value={progress.value} max={progress.max}>
-                {progress.percentage}%
-              </Progress>
-            </Spacer>
-            <Hr />
-          </>
+          <ShipmentProgress shipment={shipment} />
         )}
         <Spacer top='4'>
           {packingList.map((stockLineItem, index) => {

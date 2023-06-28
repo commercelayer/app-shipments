@@ -3,6 +3,7 @@ import { ShipmentList } from '#components/ShipmentList'
 import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
+import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import {
   Button,
   EmptyState,
@@ -12,7 +13,6 @@ import {
   formatDate,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import { useShipmentDetails } from 'src/hooks/useShipmentDetails'
 import { Link, useLocation, useRoute } from 'wouter'
 
 export function ShipmentDetails(): JSX.Element {

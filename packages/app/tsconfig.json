@@ -31,17 +31,20 @@
       "#components/*": [
         "src/components/*"
       ],
+      "#contexts/*": [
+        "src/contexts/*"
+      ],
       "#data/*": [
         "src/data/*"
       ],
-      "#pages/*": [
-        "src/pages/*"
+      "#hooks/*": [
+        "src/hooks/*"
       ],
       "#mocks": [
         "src/mocks/index"
       ],
-      "#contexts/*": [
-        "src/contexts/*"
+      "#pages/*": [
+        "src/pages/*"
       ],
     }
   },
