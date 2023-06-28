@@ -1,3 +1,4 @@
+import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import {
   Legend,
   Spacer,
@@ -10,7 +11,6 @@ import {
 import type { Shipment } from '@commercelayer/sdk'
 import isEmpty from 'lodash/isEmpty'
 import { useEffect, useReducer, type Reducer } from 'react'
-import { useShipmentDetails } from 'src/hooks/useShipmentDetails'
 
 interface Props {
   shipment: Shipment
