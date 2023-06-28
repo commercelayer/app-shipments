@@ -1,11 +1,13 @@
 import { getShipmentStatusName } from '#data/dictionaries'
 import { filtersInstructions } from '#data/filters'
 import { appRoutes } from '#data/routes'
+import { useHomeCounters } from '#hooks/useHomeCounters'
 import {
   Icon,
   List,
   ListItem,
   PageLayout,
+  SkeletonTemplate,
   Spacer,
   Text,
   useTokenProvider
@@ -24,6 +26,8 @@ export function Home(): JSX.Element {
 
   const search = useSearch()
   const [, setLocation] = useLocation()
+
+  const counters = useHomeCounters()
 
   const { SearchWithNav, adapters } = useFilters({
     instructions: filtersInstructions
@@ -69,7 +73,10 @@ export function Home(): JSX.Element {
               tag='a'
               icon={<Icon name='arrowDown' background='orange' gap='small' />}
             >
-              <Text weight='semibold'>Picking</Text>
+              <LabelWithCounter
+                label={getShipmentStatusName('picking')}
+                counter={counters.picking}
+              />
               <Icon name='caretRight' />
             </ListItem>
           </Link>
@@ -79,7 +86,10 @@ export function Home(): JSX.Element {
               tag='a'
               icon={<Icon name='package' background='orange' gap='small' />}
             >
-              <Text weight='semibold'>Packing</Text>
+              <LabelWithCounter
+                label={getShipmentStatusName('packing')}
+                counter={counters.packing}
+              />
               <Icon name='caretRight' />
             </ListItem>
           </Link>
@@ -91,7 +101,10 @@ export function Home(): JSX.Element {
                 <Icon name='arrowUpRight' background='orange' gap='small' />
               }
             >
-              <Text weight='semibold'>Ready to ship</Text>
+              <LabelWithCounter
+                label={getShipmentStatusName('ready_to_ship')}
+                counter={counters.readyToShip}
+              />
               <Icon name='caretRight' />
             </ListItem>
           </Link>
@@ -101,7 +114,10 @@ export function Home(): JSX.Element {
               tag='a'
               icon={<Icon name='hourglass' background='orange' gap='small' />}
             >
-              <Text weight='semibold'>On hold</Text>
+              <LabelWithCounter
+                label={getShipmentStatusName('on_hold')}
+                counter={counters.onHold}
+              />
               <Icon name='caretRight' />
             </ListItem>
           </Link>
@@ -122,5 +138,21 @@ export function Home(): JSX.Element {
         </List>
       </Spacer>
     </PageLayout>
+  )
+}
+
+function LabelWithCounter({
+  label,
+  counter
+}: {
+  label: string
+  counter?: number
+}): JSX.Element {
+  return (
+    <SkeletonTemplate isLoading={counter == null}>
+      <Text weight='semibold'>
+        {label} ({counter ?? '0'})
+      </Text>
+    </SkeletonTemplate>
   )
 }
