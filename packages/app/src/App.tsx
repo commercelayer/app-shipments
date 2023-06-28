@@ -1,6 +1,8 @@
 import { ErrorNotFound } from '#pages/ErrorNotFound'
+import { Filters } from '#pages/Filters'
 import { Home } from '#pages/Home'
 import { ShipmentDetails } from '#pages/ShipmentDetails'
+import { ShipmentList } from '#pages/ShipmentList'
 import {
   CoreSdkProvider,
   ErrorBoundary,
@@ -33,6 +35,12 @@ export function App(): JSX.Element {
               <Switch>
                 <Route path={appRoutes.home.path}>
                   <Home />
+                </Route>
+                <Route path={appRoutes.filters.path}>
+                  <Filters />
+                </Route>
+                <Route path={appRoutes.list.path}>
+                  <ShipmentList />
                 </Route>
                 <Route path={appRoutes.details.path}>
                   <ShipmentDetails />

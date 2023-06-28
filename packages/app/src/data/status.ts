@@ -1,3 +1,4 @@
+import { getShipmentStatusName } from '#data/dictionaries'
 import type { BadgeVariant } from '@commercelayer/app-elements/dist/ui/atoms/Badge'
 import type { IconProps } from '@commercelayer/app-elements/dist/ui/atoms/Icon'
 import type { Shipment } from '@commercelayer/sdk'
@@ -15,7 +16,7 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
     case 'picking':
       return {
         status: shipment.status,
-        label: 'Picking',
+        label: getShipmentStatusName(shipment.status),
         icon: 'arrowDown',
         color: 'orange',
         badgeVariant: 'warning-solid'
@@ -24,7 +25,7 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
     case 'packing':
       return {
         status: shipment.status,
-        label: 'Packing',
+        label: getShipmentStatusName(shipment.status),
         icon: 'package',
         color: 'orange',
         badgeVariant: 'warning-solid'
@@ -33,7 +34,7 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
     case 'ready_to_ship':
       return {
         status: shipment.status,
-        label: 'Ready to ship',
+        label: getShipmentStatusName(shipment.status),
         icon: 'arrowUpRight',
         color: 'orange',
         badgeVariant: 'warning-solid'
@@ -42,7 +43,7 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
     case 'on_hold':
       return {
         status: shipment.status,
-        label: 'On hold',
+        label: getShipmentStatusName(shipment.status),
         icon: 'hourglass',
         color: 'orange',
         badgeVariant: 'warning-solid'
@@ -51,7 +52,7 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
     case 'shipped':
       return {
         status: shipment.status,
-        label: 'Shipped',
+        label: getShipmentStatusName(shipment.status),
         icon: 'check',
         color: 'green',
         badgeVariant: 'success-solid'
