@@ -1,9 +1,11 @@
 import { ShipmentAddresses } from '#components/ShipmentAddresses'
-import { ShipmentList } from '#components/ShipmentList'
+import { ShipmentDetailsContextMenu } from '#components/ShipmentDetailsContextMenu'
+import { ShipmentPackingList } from '#components/ShipmentPackingList'
 import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
+import { useViewStatus } from '#hooks/useViewStatus'
 import {
   Button,
   EmptyState,
@@ -27,6 +29,7 @@ export function ShipmentDetails(): JSX.Element {
   const shipmentId = params?.shipmentId ?? ''
 
   const { shipment, isLoading } = useShipmentDetails(shipmentId)
+  const viewStatus = useViewStatus(shipment)
 
   if (shipmentId === undefined || !canUser('read', 'orders')) {
     return (
@@ -55,6 +58,13 @@ export function ShipmentDetails(): JSX.Element {
   return (
     <PageLayout
       mode={mode}
+      // TODO: Context Actions are still work in progress
+      actionButton={
+        <ShipmentDetailsContextMenu
+          shipment={shipment}
+          actions={viewStatus.contextActions?.map((a) => a.label) ?? []}
+        />
+      }
       title={
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>
       }
@@ -73,7 +83,7 @@ export function ShipmentDetails(): JSX.Element {
         <Spacer bottom='4'>
           <ShipmentSteps shipment={shipment} />
           <Spacer top='14'>
-            <ShipmentList shipment={shipment} />
+            <ShipmentPackingList shipment={shipment} />
           </Spacer>
           <Spacer top='14'>
             <ShipmentAddresses shipment={shipment} />
