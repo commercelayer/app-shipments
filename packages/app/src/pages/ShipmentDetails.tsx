@@ -60,10 +60,12 @@ export function ShipmentDetails(): JSX.Element {
       mode={mode}
       // TODO: Context Actions are still work in progress
       actionButton={
-        <ShipmentDetailsContextMenu
-          shipment={shipment}
-          actions={viewStatus.contextActions?.map((a) => a.label) ?? []}
-        />
+        viewStatus.contextActions != null && (
+          <ShipmentDetailsContextMenu
+            shipment={shipment}
+            actions={viewStatus.contextActions ?? []}
+          />
+        )
       }
       title={
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>

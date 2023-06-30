@@ -1,5 +1,7 @@
 import { ShipmentProgress } from '#components/ShipmentProgress'
 import { usePickingList } from '#hooks/usePickingList'
+import { useShipmentDetails } from '#hooks/useShipmentDetails'
+import { useTriggerAttribute } from '#hooks/useTriggerAttribute'
 import { useViewStatus } from '#hooks/useViewStatus'
 import {
   A,
@@ -11,6 +13,7 @@ import {
   ShipmentParcels,
   Spacer,
   Text,
+  useCoreSdkProvider,
   withSkeletonTemplate
 } from '@commercelayer/app-elements'
 import type { ListItemProps } from '@commercelayer/app-elements/dist/ui/lists/ListItem'
@@ -25,6 +28,7 @@ interface Props {
 
 export const ShipmentPackingList = withSkeletonTemplate<Props>(
   ({ shipment, isLoading }) => {
+    const { trigger } = useTriggerAttribute(shipment.id)
     const pickingList = usePickingList(shipment)
     const viewStatus = useViewStatus(shipment)
 
@@ -36,6 +40,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
       <>
         <Legend
           title={viewStatus.title}
+          border={pickingList.length > 0 ? undefined : 'none'}
           actionButton={
             viewStatus.headerAction == null ? null : (
               <A>{viewStatus.headerAction.label}</A>
@@ -59,9 +64,25 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
         <ParcelList shipment={shipment} showTitle={pickingList.length > 0} />
         <ActionButtons
           actions={
-            viewStatus.footerActions?.map((fa) => ({
-              ...fa,
-              onClick: () => {}
+            viewStatus.footerActions?.map((action) => ({
+              ...action,
+              onClick: async () => {
+                if (action.triggerAttribute === '_create_parcel') {
+                  if (shipment.status !== 'packing') {
+                    await trigger('_packing')
+                  }
+
+                  alert(`Missing implementation for ${action.triggerAttribute}`)
+                  return
+                }
+
+                if (action.triggerAttribute === '_get_rates') {
+                  alert(`Missing implementation for ${action.triggerAttribute}`)
+                  return
+                }
+
+                void trigger(action.triggerAttribute)
+              }
             })) ?? []
           }
         />
@@ -117,17 +138,22 @@ const ParcelList = withSkeletonTemplate<{
   shipment: ShipmentResource
   showTitle: boolean
 }>(({ shipment, showTitle }) => {
+  const { sdkClient } = useCoreSdkProvider()
+  const { mutateShipment } = useShipmentDetails(shipment.id)
+
   if ((shipment.parcels ?? []).length <= 0) {
     return null
   }
 
   return (
-    <Spacer top='8'>
+    <Spacer top={showTitle ? '8' : undefined}>
       {showTitle && <Legend titleSize='small' title='Parcels' border='none' />}
       <ShipmentParcels
         shipment={shipment}
         onRemoveParcel={(id) => {
-          alert(`Remove ${id}`)
+          void sdkClient.parcels
+            .delete(id)
+            .then(async () => await mutateShipment())
         }}
       />
     </Spacer>
