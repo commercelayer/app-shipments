@@ -1,7 +1,5 @@
 import { isMockedId, makeShipment } from '#mocks'
 import { useCoreApi } from '@commercelayer/app-elements'
-import type { Shipment } from '@commercelayer/sdk'
-import type { KeyedMutator } from 'swr'
 
 export const shipmentIncludeAttribute = [
   'order',
@@ -20,11 +18,8 @@ export const shipmentIncludeAttribute = [
   'parcels.parcel_line_items'
 ]
 
-export function useShipmentDetails(id: string): {
-  shipment: Shipment
-  isLoading: boolean
-  mutateShipment: KeyedMutator<Shipment>
-} {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function useShipmentDetails(id: string) {
   const {
     data: shipment,
     isLoading,

@@ -1,18 +1,26 @@
+import { useTriggerAttribute } from '#hooks/useTriggerAttribute'
+import type { Action } from '#hooks/useViewStatus'
 import { ContextMenu, DropdownMenuItem } from '@commercelayer/app-elements'
 import type { Shipment } from '@commercelayer/sdk'
 
 export const ShipmentDetailsContextMenu: React.FC<{
   shipment: Shipment
-  actions: string[]
-}> = ({ actions }) => {
+  actions: Action[]
+}> = ({ shipment, actions }) => {
+  const { trigger } = useTriggerAttribute(shipment.id)
+
   return (
     <ContextMenu
-      menuItems={actions.map((triggerAttribute) => (
+      menuItems={actions.map((action) => (
         <DropdownMenuItem
-          key={triggerAttribute}
-          label={triggerAttribute}
+          key={action.label}
+          label={action.label}
           onClick={() => {
-            alert(triggerAttribute)
+            if (action.triggerAttribute === '_create_parcel') {
+              return
+            }
+
+            void trigger(action.triggerAttribute)
           }}
         />
       ))}
