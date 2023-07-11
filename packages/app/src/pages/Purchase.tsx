@@ -20,17 +20,32 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useRoute } from 'wouter'
 
-export function Purchase(): JSX.Element {
+export function Purchase(): JSX.Element | null {
+  const [, params] = useRoute<{ shipmentId: string }>(appRoutes.purchase.path)
+  const shipmentId = params?.shipmentId ?? ''
+
+  const { shipment, isLoading } = useShipmentDetails(shipmentId)
+  const hasBeenPurchased = shipment.purchase_started_at != null
+
+  if (isLoading) {
+    return null
+  }
+
+  if (hasBeenPurchased) {
+    return <NotAuthorized shipmentId={shipmentId} />
+  }
+
+  return <PurchaseShipment shipmentId={shipmentId} />
+}
+
+function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
   const {
     canUser,
     settings: { mode }
   } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
   const [, setLocation] = useLocation()
-  const [, params] = useRoute<{ shipmentId: string }>(appRoutes.purchase.path)
   const [selectedRateId, setSelectedRateId] = useState<string | undefined>()
-
-  const shipmentId = params?.shipmentId ?? ''
 
   const { isRefreshing } = useShipmentRates(shipmentId)
   const [isWaiting, setIsWaiting] = useState<boolean>(true)
@@ -67,31 +82,8 @@ export function Purchase(): JSX.Element {
     [isRefreshing]
   )
 
-  const hasBeenPurchased = shipment.purchase_started_at != null
-
-  if (
-    shipmentId === undefined ||
-    !canUser('read', 'orders') ||
-    hasBeenPurchased
-  ) {
-    return (
-      <PageLayout
-        title='Orders'
-        onGoBack={() => {
-          setLocation(appRoutes.home.makePath())
-        }}
-        mode={mode}
-      >
-        <EmptyState
-          title='Not authorized'
-          action={
-            <Link href={appRoutes.home.makePath()}>
-              <Button variant='primary'>Go back</Button>
-            </Link>
-          }
-        />
-      </PageLayout>
-    )
+  if (shipmentId === undefined || !canUser('read', 'orders')) {
+    return <NotAuthorized shipmentId={shipmentId} />
   }
 
   return (
@@ -165,6 +157,31 @@ export function Purchase(): JSX.Element {
           </SkeletonTemplate>
         </Spacer>
       </SkeletonTemplate>
+    </PageLayout>
+  )
+}
+
+function NotAuthorized({ shipmentId }: { shipmentId: string }): JSX.Element {
+  const {
+    settings: { mode }
+  } = useTokenProvider()
+  const [, setLocation] = useLocation()
+  return (
+    <PageLayout
+      title='Select a shipping rate'
+      onGoBack={() => {
+        setLocation(appRoutes.home.makePath())
+      }}
+      mode={mode}
+    >
+      <EmptyState
+        title='Not authorized'
+        action={
+          <Link href={appRoutes.details.makePath(shipmentId)}>
+            <Button variant='primary'>Go back</Button>
+          </Link>
+        }
+      />
     </PageLayout>
   )
 }
