@@ -2,6 +2,7 @@ import { ErrorNotFound } from '#pages/ErrorNotFound'
 import { Filters } from '#pages/Filters'
 import { Home } from '#pages/Home'
 import { Packing } from '#pages/Packing'
+import { Purchase } from '#pages/Purchase'
 import { ShipmentDetails } from '#pages/ShipmentDetails'
 import { ShipmentList } from '#pages/ShipmentList'
 import {
@@ -48,6 +49,9 @@ export function App(): JSX.Element {
                 </Route>
                 <Route path={appRoutes.packing.path}>
                   <Packing />
+                </Route>
+                <Route path={appRoutes.purchase.path}>
+                  <Purchase />
                 </Route>
                 <Route>
                   <ErrorNotFound />

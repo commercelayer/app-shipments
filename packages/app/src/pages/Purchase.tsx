@@ -1,0 +1,170 @@
+import { appRoutes } from '#data/routes'
+import {
+  shipmentIncludeAttribute,
+  useShipmentDetails,
+  useShipmentRates
+} from '#hooks/useShipmentDetails'
+import { makeShipment } from '#mocks'
+import {
+  Avatar,
+  Button,
+  EmptyState,
+  ListItem,
+  PageLayout,
+  SkeletonTemplate,
+  Spacer,
+  Text,
+  useCoreSdkProvider,
+  useTokenProvider
+} from '@commercelayer/app-elements'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useRoute } from 'wouter'
+
+export function Purchase(): JSX.Element {
+  const {
+    canUser,
+    settings: { mode }
+  } = useTokenProvider()
+  const { sdkClient } = useCoreSdkProvider()
+  const [, setLocation] = useLocation()
+  const [, params] = useRoute<{ shipmentId: string }>(appRoutes.purchase.path)
+  const [selectedRateId, setSelectedRateId] = useState<string | undefined>()
+
+  const shipmentId = params?.shipmentId ?? ''
+
+  const { isRefreshing } = useShipmentRates(shipmentId)
+  const [isWaiting, setIsWaiting] = useState<boolean>(true)
+  const {
+    shipment: fetchedShipment,
+    mutateShipment,
+    isLoading,
+    isValidating
+  } = useShipmentDetails(shipmentId, isRefreshing, false)
+
+  const isReady = useMemo(
+    () => !(isRefreshing || isLoading || isWaiting || isValidating),
+    [isRefreshing, isLoading, isWaiting, isValidating]
+  )
+
+  const shipment = useMemo(
+    () => (isReady ? fetchedShipment : makeShipment()),
+    [isReady, fetchedShipment]
+  )
+
+  const selectedRate = useMemo(() => {
+    return shipment.rates?.find((rate) => rate.id === selectedRateId)
+  }, [selectedRateId, shipment.rates])
+
+  useEffect(
+    function refreshRates() {
+      if (!isRefreshing) {
+        setTimeout(() => {
+          setIsWaiting(false)
+          void mutateShipment()
+        }, 5000)
+      }
+    },
+    [isRefreshing]
+  )
+
+  const hasBeenPurchased = shipment.purchase_started_at != null
+
+  if (
+    shipmentId === undefined ||
+    !canUser('read', 'orders') ||
+    hasBeenPurchased
+  ) {
+    return (
+      <PageLayout
+        title='Orders'
+        onGoBack={() => {
+          setLocation(appRoutes.home.makePath())
+        }}
+        mode={mode}
+      >
+        <EmptyState
+          title='Not authorized'
+          action={
+            <Link href={appRoutes.home.makePath()}>
+              <Button variant='primary'>Go back</Button>
+            </Link>
+          }
+        />
+      </PageLayout>
+    )
+  }
+
+  return (
+    <PageLayout
+      mode={mode}
+      title='Select a shipping rate'
+      onGoBack={() => {
+        setLocation(appRoutes.details.makePath(shipmentId))
+      }}
+    >
+      <SkeletonTemplate isLoading={!isReady}>
+        <Spacer bottom='4'>
+          {shipment.rates?.map((rate) => (
+            <ListItem
+              onClick={() => {
+                setSelectedRateId(rate.id)
+              }}
+              key={rate.id}
+              tag='div'
+              alignItems='top'
+              icon={
+                <Avatar
+                  src='carriers:dhl'
+                  alt={rate.carrier}
+                  border='none'
+                  shape='circle'
+                  size='small'
+                />
+              }
+            >
+              <div>
+                <Text size='regular' weight='bold'>
+                  {rate.service}
+                </Text>
+                {rate.carrier != null && (
+                  <Text size='small' tag='div' variant='info' weight='medium'>
+                    {rate.carrier}
+                  </Text>
+                )}
+              </div>
+              <Text size='regular' weight='bold'>
+                {rate.formatted_rate}
+              </Text>
+            </ListItem>
+          ))}
+        </Spacer>
+        <Spacer bottom='4'>
+          <SkeletonTemplate isLoading={false}>
+            <Button
+              fullWidth
+              disabled={selectedRate == null}
+              onClick={() => {
+                if (selectedRate != null) {
+                  void sdkClient.shipments
+                    .update(
+                      {
+                        id: shipment.id,
+                        _purchase: true,
+                        selected_rate_id: selectedRate.id
+                      },
+                      { include: shipmentIncludeAttribute }
+                    )
+                    .then(async () => {
+                      setLocation(appRoutes.details.makePath(shipmentId))
+                    })
+                }
+              }}
+            >
+              Purchase {selectedRate?.formatted_rate}
+            </Button>
+          </SkeletonTemplate>
+        </Spacer>
+      </SkeletonTemplate>
+    </PageLayout>
+  )
+}

@@ -87,7 +87,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
                 }
 
                 if (action.triggerAttribute === '_get_rates') {
-                  alert(`Missing implementation for ${action.triggerAttribute}`)
+                  setLocation(appRoutes.purchase.makePath(shipment.id))
                   return
                 }
 

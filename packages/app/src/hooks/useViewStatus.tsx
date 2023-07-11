@@ -23,8 +23,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
   const pickingList = usePickingList(shipment)
   const hasPickingItems = pickingList.length > 0
   const hasParcels = shipment.parcels != null && shipment.parcels.length > 0
-  const hasTracking =
-    shipment.parcels?.some((parcel) => parcel.tracking_number != null) ?? false
+  const hasBeenPurchased = shipment.purchase_started_at != null
 
   return useMemo(() => {
     const result: ViewStatus = {
@@ -58,7 +57,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
             { label: 'Back to picking', triggerAttribute: '_picking' }
           ]
         } else {
-          if (!hasTracking) {
+          if (!hasBeenPurchased) {
             result.contextActions = [
               { label: 'Mark as ready', triggerAttribute: '_ready_to_ship' }
             ]
@@ -73,7 +72,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
         break
 
       case 'ready_to_ship':
-        result.contextActions = hasTracking
+        result.contextActions = hasBeenPurchased
           ? []
           : [
               {
@@ -81,7 +80,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
                 triggerAttribute: '_packing'
               }
             ]
-        result.footerActions = hasTracking
+        result.footerActions = hasBeenPurchased
           ? []
           : [
               {
@@ -103,5 +102,5 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
     }
 
     return result
-  }, [shipment, hasPickingItems, hasParcels, hasTracking])
+  }, [shipment, hasPickingItems, hasParcels, hasBeenPurchased])
 }
