@@ -14,13 +14,12 @@ function parcelsToStockLineItems(parcels: Parcel[]): StockLineItem[] {
 
       if (stockLineItem != null) {
         stockLineItem.quantity += parcelLineItem.quantity
-        break
-      }
-
-      stockLineItems[parcelLineItem.sku_code] = {
-        ...parcelLineItem,
-        type: 'stock_line_items',
-        quantity: parcelLineItem.quantity ?? 0
+      } else {
+        stockLineItems[parcelLineItem.sku_code] = {
+          ...parcelLineItem,
+          type: 'stock_line_items',
+          quantity: parcelLineItem.quantity ?? 0
+        }
       }
     }
   }
