@@ -39,8 +39,9 @@ export function useShipmentDetails(
       ...(shouldRevalidate
         ? {}
         : {
-            revalidateOnFocus: false,
             revalidateIfStale: false,
+            revalidateOnFocus: false,
+            revalidateOnMount: true,
             revalidateOnReconnect: false
           })
     }

@@ -9,6 +9,7 @@ import {
   Avatar,
   Button,
   EmptyState,
+  InputRadioGroup,
   ListItem,
   PageLayout,
   SkeletonTemplate,
@@ -52,13 +53,12 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
   const {
     shipment: fetchedShipment,
     mutateShipment,
-    isLoading,
-    isValidating
+    isLoading
   } = useShipmentDetails(shipmentId, isRefreshing, false)
 
   const isReady = useMemo(
-    () => !(isRefreshing || isLoading || isWaiting || isValidating),
-    [isRefreshing, isLoading, isWaiting, isValidating]
+    () => !(isRefreshing || isLoading || isWaiting),
+    [isRefreshing, isLoading, isWaiting]
   )
 
   const shipment = useMemo(
@@ -82,6 +82,46 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
     [isRefreshing]
   )
 
+  const options = useMemo(() => {
+    return (
+      shipment.rates?.map((rate) => ({
+        value: rate.id,
+        content: (
+          <ListItem
+            tag='div'
+            alignItems='top'
+            alignIcon='center'
+            padding='none'
+            borderStyle='none'
+            icon={
+              <Avatar
+                src='carriers:generic'
+                alt={rate.carrier}
+                border='none'
+                shape='circle'
+                size='small'
+              />
+            }
+          >
+            <div>
+              <Text size='regular' weight='bold'>
+                {rate.service}
+              </Text>
+              {rate.carrier != null && (
+                <Text size='small' tag='div' variant='info' weight='medium'>
+                  {rate.carrier}
+                </Text>
+              )}
+            </div>
+            <Text size='regular' weight='bold'>
+              {rate.formatted_rate}
+            </Text>
+          </ListItem>
+        )
+      })) ?? []
+    )
+  }, [shipment.rates])
+
   if (shipmentId === undefined || !canUser('read', 'orders')) {
     return <NotAuthorized shipmentId={shipmentId} />
   }
@@ -96,39 +136,13 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
     >
       <SkeletonTemplate isLoading={!isReady}>
         <Spacer bottom='4'>
-          {shipment.rates?.map((rate) => (
-            <ListItem
-              onClick={() => {
-                setSelectedRateId(rate.id)
-              }}
-              key={rate.id}
-              tag='div'
-              alignItems='top'
-              icon={
-                <Avatar
-                  src='carriers:dhl'
-                  alt={rate.carrier}
-                  border='none'
-                  shape='circle'
-                  size='small'
-                />
-              }
-            >
-              <div>
-                <Text size='regular' weight='bold'>
-                  {rate.service}
-                </Text>
-                {rate.carrier != null && (
-                  <Text size='small' tag='div' variant='info' weight='medium'>
-                    {rate.carrier}
-                  </Text>
-                )}
-              </div>
-              <Text size='regular' weight='bold'>
-                {rate.formatted_rate}
-              </Text>
-            </ListItem>
-          ))}
+          <InputRadioGroup
+            name='carrier'
+            options={options}
+            onChange={(rateId) => {
+              setSelectedRateId(rateId)
+            }}
+          />
         </Spacer>
         <Spacer bottom='4'>
           <SkeletonTemplate isLoading={false}>
