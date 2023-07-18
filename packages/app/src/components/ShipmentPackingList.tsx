@@ -75,25 +75,30 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
         <ParcelList shipment={shipment} showTitle={pickingList.length > 0} />
         <ActionButtons
           actions={
-            viewStatus.footerActions?.map((action) => ({
-              ...action,
-              onClick: async () => {
-                if (action.triggerAttribute === '_create_parcel') {
-                  if (shipment.status !== 'packing') {
-                    await trigger('_packing')
+            viewStatus.footerActions?.map(
+              ({ label, triggerAttribute, disabled, variant }) => ({
+                label,
+                disabled,
+                variant,
+                onClick: async () => {
+                  if (triggerAttribute === '_create_parcel') {
+                    if (shipment.status !== 'packing') {
+                      await trigger('_packing')
+                    }
+
+                    setLocation(appRoutes.packing.makePath(shipment.id))
+                    return
                   }
-                  setLocation(appRoutes.packing.makePath(shipment.id))
-                  return
-                }
 
-                if (action.triggerAttribute === '_get_rates') {
-                  alert(`Missing implementation for ${action.triggerAttribute}`)
-                  return
-                }
+                  if (triggerAttribute === '_get_rates') {
+                    setLocation(appRoutes.purchase.makePath(shipment.id))
+                    return
+                  }
 
-                void trigger(action.triggerAttribute)
-              }
-            })) ?? []
+                  void trigger(triggerAttribute)
+                }
+              })
+            ) ?? []
           }
         />
       </>
