@@ -1,8 +1,8 @@
 import { Button, Spacer } from '@commercelayer/app-elements'
-import { Form } from '@commercelayer/app-elements-hook-form'
+import { Form, ValidationApiError } from '@commercelayer/app-elements-hook-form'
 import { type StockLineItem } from '@commercelayer/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useForm, type UseFormSetError } from 'react-hook-form'
 import { z } from 'zod'
 import { FormFieldItems } from './FormFieldItems'
@@ -54,6 +54,8 @@ interface Props {
 export function FormPacking({
   onSubmit,
   defaultValues,
+  apiError,
+  isSubmitting,
   stockLocationId,
   stockLineItems
 }: Props): JSX.Element {
@@ -62,14 +64,14 @@ export function FormPacking({
     resolver: zodResolver(packingFormSchema)
   })
 
-  useEffect(() => {
-    methods.reset(defaultValues)
-  }, [defaultValues])
-
-  const [renderKey, setRenderKey] = useState(0)
-  useEffect(() => {
-    setRenderKey(new Date().getTime())
-  }, [stockLineItems])
+  useEffect(
+    function resetFormStateOnSuccessSubmit() {
+      if (apiError == null) {
+        methods.reset(defaultValues)
+      }
+    },
+    [defaultValues, apiError]
+  )
 
   return (
     <Form
@@ -82,15 +84,22 @@ export function FormPacking({
         <FormFieldPackages stockLocationId={stockLocationId} />
       </Spacer>
       <Spacer bottom='12'>
-        <FormFieldItems key={renderKey} stockLineItems={stockLineItems} />
+        <FormFieldItems stockLineItems={stockLineItems} />
       </Spacer>
       <Spacer bottom='12'>
         <FormFieldWeight />
       </Spacer>
-      {/* TODO handle form api errors */}
-      <Button type='submit' fullWidth>
+      <Button type='submit' fullWidth disabled={isSubmitting}>
         Pack · {methods.watch('items').reduce((acc, i) => acc + i.quantity, 0)}
       </Button>
+      <ValidationApiError
+        apiError={apiError}
+        fieldMap={{
+          package: 'packageId',
+          stock_line_item: 'items',
+          unit_of_weight: 'unitOfWeight'
+        }}
+      />
     </Form>
   )
 }

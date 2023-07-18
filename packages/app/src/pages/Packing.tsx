@@ -27,7 +27,8 @@ export function Packing(): JSX.Element {
   const { shipment, isLoading } = useShipmentDetails(shipmentId)
   const pickingList = usePickingList(shipment)
   const isValidStatus = shipment?.status === 'packing'
-  const { trigger } = useCreateParcel(shipmentId)
+  const { createParcelError, createParcelWithItems, isCreatingParcel } =
+    useCreateParcel(shipmentId)
 
   const defaultUnitOfWeight = useMemo(
     () =>
@@ -101,11 +102,6 @@ export function Packing(): JSX.Element {
       </Spacer>
       <Spacer bottom='12'>
         <FormPacking
-          stockLineItems={pickingList}
-          stockLocationId={shipment.stock_location.id}
-          onSubmit={(formValues) => {
-            void trigger(formValues)
-          }}
           defaultValues={{
             items: pickingList.map((item) => ({
               quantity: item.quantity,
@@ -115,6 +111,13 @@ export function Packing(): JSX.Element {
             weight: '',
             unitOfWeight:
               defaultUnitOfWeight as PackingFormValues['unitOfWeight']
+          }}
+          stockLineItems={pickingList}
+          stockLocationId={shipment.stock_location.id}
+          isSubmitting={isCreatingParcel}
+          apiError={createParcelError}
+          onSubmit={(formValues) => {
+            void createParcelWithItems(formValues)
           }}
         />
       </Spacer>
