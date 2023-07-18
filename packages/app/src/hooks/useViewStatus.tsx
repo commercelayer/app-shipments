@@ -1,3 +1,4 @@
+import { hasBeenPurchased } from '@commercelayer/app-elements'
 import type { ActionButtonsProps } from '@commercelayer/app-elements/dist/ui/composite/ActionButtons'
 import type { Shipment, ShipmentUpdate } from '@commercelayer/sdk'
 import { useMemo } from 'react'
@@ -23,9 +24,9 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
   const pickingList = usePickingList(shipment)
   const hasPickingItems = pickingList.length > 0
   const hasParcels = shipment.parcels != null && shipment.parcels.length > 0
-  const hasBeenPurchased = shipment.purchase_started_at != null
 
   return useMemo(() => {
+    const purchased = hasBeenPurchased(shipment)
     const result: ViewStatus = {
       title: !hasPickingItems
         ? 'Parcels'
@@ -57,7 +58,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
             { label: 'Back to picking', triggerAttribute: '_picking' }
           ]
         } else {
-          if (!hasBeenPurchased) {
+          if (!purchased) {
             result.contextActions = [
               { label: 'Mark as ready', triggerAttribute: '_ready_to_ship' }
             ]
@@ -72,7 +73,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
         break
 
       case 'ready_to_ship':
-        result.contextActions = hasBeenPurchased
+        result.contextActions = purchased
           ? []
           : [
               {
@@ -80,7 +81,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
                 triggerAttribute: '_packing'
               }
             ]
-        result.footerActions = hasBeenPurchased
+        result.footerActions = purchased
           ? []
           : [
               {

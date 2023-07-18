@@ -38,21 +38,6 @@ export const makeShipment = (): Shipment => {
         est_delivery_days: 1,
         shipment_id: 'shp_733ca570a45c4527867d4eb8072e764d',
         mode: 'test'
-      },
-      {
-        id: 'rate_bf0561f3f1c64b589596a5c39ae9938c',
-        carrier: 'DHLExpress',
-        service: 'Medical Express',
-        carrier_account_id: 'ca_198fff28d1534b3ba3788fa221b39514',
-        currency: 'EUR',
-        rate: 94.77,
-        formatted_rate: '€94,77',
-        delivery_date: '2023-07-12T00:00:00Z',
-        formatted_delivery_date: 'Jul 12, 2023 12:00 AM',
-        delivery_days: 1,
-        est_delivery_days: 1,
-        shipment_id: 'shp_733ca570a45c4527867d4eb8072e764d',
-        mode: 'test'
       }
     ]
   }

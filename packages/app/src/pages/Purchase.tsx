@@ -15,6 +15,8 @@ import {
   SkeletonTemplate,
   Spacer,
   Text,
+  getAvatarSrcFromRate,
+  getShipmentRates,
   useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/app-elements'
@@ -50,25 +52,34 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
 
   const { isRefreshing } = useShipmentRates(shipmentId)
   const [isWaiting, setIsWaiting] = useState<boolean>(true)
+  const [isReady, setIsReady] = useState<boolean>(false)
   const {
     shipment: fetchedShipment,
     mutateShipment,
-    isLoading
+    isLoading,
+    isValidating
   } = useShipmentDetails(shipmentId, isRefreshing, false)
-
-  const isReady = useMemo(
-    () => !(isRefreshing || isLoading || isWaiting),
-    [isRefreshing, isLoading, isWaiting]
-  )
 
   const shipment = useMemo(
     () => (isReady ? fetchedShipment : makeShipment()),
     [isReady, fetchedShipment]
   )
 
+  const rates = useMemo(() => getShipmentRates(shipment), [shipment.rates])
+
   const selectedRate = useMemo(() => {
-    return shipment.rates?.find((rate) => rate.id === selectedRateId)
-  }, [selectedRateId, shipment.rates])
+    return rates.find((rate) => rate.id === selectedRateId)
+  }, [selectedRateId, rates])
+
+  useEffect(
+    function checkReady() {
+      setIsReady(
+        (ready) =>
+          ready || !(isRefreshing || isLoading || isWaiting || isValidating)
+      )
+    },
+    [isRefreshing, isLoading, isWaiting, isValidating]
+  )
 
   useEffect(
     function refreshRates() {
@@ -84,7 +95,7 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
 
   const options = useMemo(() => {
     return (
-      shipment.rates?.map((rate) => ({
+      rates.map((rate) => ({
         value: rate.id,
         content: (
           <ListItem
@@ -95,7 +106,7 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
             borderStyle='none'
             icon={
               <Avatar
-                src='carriers:generic'
+                src={getAvatarSrcFromRate(rate)}
                 alt={rate.carrier}
                 border='none'
                 shape='circle'
@@ -122,7 +133,7 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
     )
   }, [shipment.rates])
 
-  if (shipmentId === undefined || !canUser('read', 'orders')) {
+  if (shipmentId === undefined || !canUser('update', 'shipments')) {
     return <NotAuthorized shipmentId={shipmentId} />
   }
 
