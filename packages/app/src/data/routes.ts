@@ -22,6 +22,10 @@ export const appRoutes = {
   details: {
     path: '/list/:shipmentId',
     makePath: (shipmentId: string) => `/list/${shipmentId}`
+  },
+  packing: {
+    path: '/list/:shipmentId/packing',
+    makePath: (shipmentId: string) => `/list/${shipmentId}/packing`
   }
 }
 

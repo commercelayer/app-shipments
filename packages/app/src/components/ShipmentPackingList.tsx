@@ -1,4 +1,5 @@
 import { ShipmentProgress } from '#components/ShipmentProgress'
+import { appRoutes } from '#data/routes'
 import { usePickingList } from '#hooks/usePickingList'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import { useTriggerAttribute } from '#hooks/useTriggerAttribute'
@@ -8,6 +9,7 @@ import {
   ActionButtons,
   Avatar,
   Badge,
+  Hr,
   Legend,
   ListItem,
   ShipmentParcels,
@@ -21,6 +23,7 @@ import {
   type Shipment as ShipmentResource,
   type StockLineItem as StockLineItemResource
 } from '@commercelayer/sdk'
+import { Link, useLocation } from 'wouter'
 
 interface Props {
   shipment: ShipmentResource
@@ -28,6 +31,7 @@ interface Props {
 
 export const ShipmentPackingList = withSkeletonTemplate<Props>(
   ({ shipment, isLoading }) => {
+    const [, setLocation] = useLocation()
     const { trigger } = useTriggerAttribute(shipment.id)
     const pickingList = usePickingList(shipment)
     const viewStatus = useViewStatus(shipment)
@@ -43,12 +47,19 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
           border={pickingList.length > 0 ? undefined : 'none'}
           actionButton={
             viewStatus.headerAction == null ? null : (
-              <A>{viewStatus.headerAction.label}</A>
+              <Link href={appRoutes.packing.makePath(shipment.id)}>
+                <A>{viewStatus.headerAction.label}</A>
+              </Link>
             )
           }
         />
         {viewStatus.progress === true && (
-          <ShipmentProgress shipment={shipment} />
+          <>
+            <Spacer top='4' bottom='4'>
+              <ShipmentProgress shipment={shipment} />
+            </Spacer>
+            <Hr />
+          </>
         )}
         {pickingList.map((stockLineItem, index) => {
           return (
@@ -71,8 +82,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
                   if (shipment.status !== 'packing') {
                     await trigger('_packing')
                   }
-
-                  alert(`Missing implementation for ${action.triggerAttribute}`)
+                  setLocation(appRoutes.packing.makePath(shipment.id))
                   return
                 }
 
@@ -100,7 +110,7 @@ const StockLineItem = withSkeletonTemplate<{
     alignItems='top'
     key={stockLineItem.id}
     borderStyle={borderStyle}
-    gutter='none'
+    padding='y'
     icon={
       <Avatar
         // TODO: after Mike's changes we can use `stockLineItem?.sku?.name`
