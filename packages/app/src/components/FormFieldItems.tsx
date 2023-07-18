@@ -1,37 +1,60 @@
-import { InputCheckboxList, Text } from '@commercelayer/app-elements'
+import {
+  Avatar,
+  InputCheckboxGroup,
+  ListItem,
+  Text
+} from '@commercelayer/app-elements'
 import { ValidationError } from '@commercelayer/app-elements-hook-form'
+import type { InputCheckboxGroupProps } from '@commercelayer/app-elements/dist/ui/forms/InputCheckboxGroup'
 import type { StockLineItem } from '@commercelayer/sdk'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 interface Props {
   stockLineItems: StockLineItem[]
 }
 
 export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
-  const options = stockLineItems.map((item) => ({
-    value: item.id,
-    content: (
-      <>
-        <Text size='regular' tag='div' weight='bold'>
-          {item.stock_item?.sku?.code}
-        </Text>
-        {item.stock_item?.sku?.weight != null ? (
-          <Text size='small' tag='div' variant='info'>
-            {item.stock_item?.sku?.weight}
-            {item.stock_item?.sku?.unit_of_weight}
-          </Text>
-        ) : null}
-      </>
-    ),
-    image: {
-      url: (item.stock_item?.sku?.image_url ?? '') as `https://${string}`,
-      alt: item.stock_item?.sku?.name ?? ''
-    },
-    quantity: {
-      min: 1,
-      max: item.quantity ?? 1
-    }
-  }))
+  const options: InputCheckboxGroupProps['options'] = useMemo(
+    () =>
+      stockLineItems.map((item) => ({
+        value: item.id,
+        content: (
+          <ListItem
+            alignIcon='center'
+            alignItems='center'
+            borderStyle='none'
+            icon={
+              item.stock_item?.sku?.image_url != null ? (
+                <Avatar
+                  alt={item.stock_item.sku.name}
+                  size='small'
+                  src={item.stock_item.sku.image_url as `https://${string}`}
+                />
+              ) : undefined
+            }
+            padding='none'
+            tag='div'
+          >
+            <div>
+              <Text size='regular' tag='div' weight='bold'>
+                {item.stock_item?.sku?.name}
+              </Text>
+              {item.stock_item?.sku?.weight != null ? (
+                <Text size='small' tag='div' variant='info'>
+                  {item.stock_item?.sku?.weight}
+                  {item.stock_item?.sku?.unit_of_weight}
+                </Text>
+              ) : null}
+            </div>
+          </ListItem>
+        ),
+        quantity: {
+          min: 1,
+          max: item.quantity
+        }
+      })),
+    [stockLineItems]
+  )
 
   // when stockLineItems changes, we need to re-render the InputCheckboxList
   // so it will update the options list with the new defaultValues
@@ -49,7 +72,7 @@ export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
       <Controller
         name='items'
         render={({ field: { onChange, value } }) => (
-          <InputCheckboxList
+          <InputCheckboxGroup
             title='Items'
             defaultValues={value}
             options={options}

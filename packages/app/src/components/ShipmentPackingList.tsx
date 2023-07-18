@@ -110,7 +110,7 @@ const StockLineItem = withSkeletonTemplate<{
     alignItems='top'
     key={stockLineItem.id}
     borderStyle={borderStyle}
-    gutter='none'
+    padding='y'
     icon={
       <Avatar
         // TODO: after Mike's changes we can use `stockLineItem?.sku?.name`
