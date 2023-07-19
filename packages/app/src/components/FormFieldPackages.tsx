@@ -4,11 +4,19 @@ import {
   InputRadioGroup,
   Spacer,
   Text,
-  useCoreApi
+  useCoreApi,
+  useCoreSdkProvider,
+  type SelectValue
 } from '@commercelayer/app-elements'
-import { ValidationError } from '@commercelayer/app-elements-hook-form'
+import {
+  InputSelect,
+  ValidationError
+} from '@commercelayer/app-elements-hook-form'
 import type { Package } from '@commercelayer/sdk'
+import type { QueryParamsList } from '@commercelayer/sdk/lib/cjs/query'
 import type { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import isEmpty from 'lodash/isEmpty'
+import { useCallback } from 'react'
 import { Controller } from 'react-hook-form'
 import { makePackage } from 'src/mocks/resources/packages'
 
@@ -20,18 +28,10 @@ interface Props {
 }
 
 export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
-  // TODO: when initial packages are more than 4, add a select
   const { data: packages, isLoading } = useCoreApi(
     'packages',
     'list',
-    [
-      {
-        filters: {
-          stock_location_id_eq: stockLocationId
-        },
-        pageSize: 4
-      }
-    ],
+    [makePackageQuery(stockLocationId)],
     {
       fallbackData: repeat(2, () => makePackage()) as ListResponse<Package>
     }
@@ -43,6 +43,17 @@ export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
     )
   }
 
+  // render a select when too many packages are found, since radio buttons will take too much space
+  if (packages.length > 4) {
+    return (
+      <InputSelectPackages
+        packages={packages}
+        stockLocationId={stockLocationId}
+      />
+    )
+  }
+
+  // radio buttons for majority of the cases
   return (
     <>
       <Controller
@@ -74,6 +85,58 @@ export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
       <ValidationError name='packageId' />
     </>
   )
+}
+
+/**
+ * InputSelect component to be used when multiple packages are found
+ */
+function InputSelectPackages({
+  packages,
+  stockLocationId
+}: {
+  packages: Package[]
+  stockLocationId: string
+}): JSX.Element {
+  const { sdkClient } = useCoreSdkProvider()
+
+  const packagesToSelectOptions = useCallback(
+    (packages: Package[]): SelectValue[] =>
+      packages.map((item) => ({
+        value: item.id,
+        label: `${item.name} - ${makeSizeString(item)}`
+      })),
+    []
+  )
+
+  return (
+    <InputSelect
+      name='packageId'
+      placeholder='Select a package'
+      loadAsyncValues={async (hint) => {
+        return await sdkClient.packages
+          .list(makePackageQuery(stockLocationId, hint))
+          .then(packagesToSelectOptions)
+      }}
+      initialValues={packagesToSelectOptions(packages)}
+    />
+  )
+}
+
+/**
+ * Generate a valid SDK query object to retrieve the available packages with optional hint to filter by name
+ */
+function makePackageQuery(
+  stockLocationId: string,
+  hint?: string
+): QueryParamsList {
+  return {
+    fields: ['id', 'name', 'width', 'length', 'height', 'unit_of_length'],
+    filters: {
+      stock_location_id_eq: stockLocationId,
+      ...(!isEmpty(hint) && { name_cont: hint })
+    },
+    pageSize: 25
+  }
 }
 
 /**
