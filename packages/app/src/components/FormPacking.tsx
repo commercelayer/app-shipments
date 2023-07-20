@@ -1,8 +1,8 @@
-import { Button, Spacer } from '@commercelayer/app-elements'
+import { Button, Spacer, useIsChanged } from '@commercelayer/app-elements'
 import { Form, ValidationApiError } from '@commercelayer/app-elements-hook-form'
 import { type StockLineItem } from '@commercelayer/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useForm, type UseFormSetError } from 'react-hook-form'
 import { z } from 'zod'
 import { FormFieldItems } from './FormFieldItems'
@@ -64,14 +64,24 @@ export function FormPacking({
     resolver: zodResolver(packingFormSchema)
   })
 
-  useEffect(
-    function resetFormStateOnSuccessSubmit() {
+  // when stockLineItems changes, we need to re-render the form
+  // to update defaults values for FormFieldItems and FormFieldPackages
+  const [renderKey, setRenderKey] = useState(0)
+  useIsChanged({
+    value: stockLineItems,
+    onChange: () => {
+      setRenderKey(new Date().getTime())
+    }
+  })
+
+  useIsChanged({
+    value: defaultValues,
+    onChange: () => {
       if (apiError == null) {
         methods.reset(defaultValues)
       }
-    },
-    [defaultValues, apiError]
-  )
+    }
+  })
 
   return (
     <Form
@@ -79,6 +89,7 @@ export function FormPacking({
       onSubmit={(values) => {
         onSubmit(values, methods.setError)
       }}
+      key={renderKey}
     >
       <Spacer bottom='12'>
         <FormFieldPackages stockLocationId={stockLocationId} />
@@ -90,7 +101,11 @@ export function FormPacking({
         <FormFieldWeight />
       </Spacer>
       <Button type='submit' fullWidth disabled={isSubmitting}>
-        Pack · {methods.watch('items').reduce((acc, i) => acc + i.quantity, 0)}
+        {isSubmitting === true
+          ? 'Packing'
+          : `Pack · ${methods
+              .watch('items')
+              .reduce((acc, i) => acc + i.quantity, 0)}`}
       </Button>
       <ValidationApiError
         apiError={apiError}

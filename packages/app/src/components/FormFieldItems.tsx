@@ -7,7 +7,7 @@ import {
 import { ValidationError } from '@commercelayer/app-elements-hook-form'
 import type { InputCheckboxGroupProps } from '@commercelayer/app-elements/dist/ui/forms/InputCheckboxGroup'
 import type { StockLineItem } from '@commercelayer/sdk'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 interface Props {
   stockLineItems: StockLineItem[]
@@ -56,13 +56,6 @@ export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
     [stockLineItems]
   )
 
-  // when stockLineItems changes, we need to re-render the InputCheckboxList
-  // so it will update the options list with the new defaultValues
-  const [renderKey, setRenderKey] = useState(0)
-  useEffect(() => {
-    setRenderKey(new Date().getTime())
-  }, [stockLineItems])
-
   if (options.length === 0) {
     return <div>No items</div>
   }
@@ -76,7 +69,6 @@ export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
             title='Items'
             defaultValues={value}
             options={options}
-            key={renderKey}
             onChange={onChange}
           />
         )}
