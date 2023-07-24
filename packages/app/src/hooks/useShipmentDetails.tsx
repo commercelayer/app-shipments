@@ -15,7 +15,9 @@ export const shipmentIncludeAttribute = [
 
   'parcels',
   'parcels.package',
-  'parcels.parcel_line_items'
+  'parcels.parcel_line_items',
+
+  'carrier_accounts'
 ]
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

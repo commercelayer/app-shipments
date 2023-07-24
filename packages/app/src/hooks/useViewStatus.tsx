@@ -24,6 +24,8 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
   const pickingList = usePickingList(shipment)
   const hasPickingItems = pickingList.length > 0
   const hasParcels = shipment.parcels != null && shipment.parcels.length > 0
+  const hasCarrierAccounts =
+    shipment.carrier_accounts != null && shipment.carrier_accounts.length > 0
 
   return useMemo(() => {
     const purchased = hasBeenPurchased(shipment)
@@ -59,15 +61,24 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
           ]
         } else {
           if (!purchased) {
-            result.contextActions = [
-              { label: 'Mark as ready', triggerAttribute: '_ready_to_ship' }
-            ]
-            result.footerActions = [
-              {
-                label: 'Purchase labels',
-                triggerAttribute: '_get_rates'
-              }
-            ]
+            if (hasCarrierAccounts) {
+              result.contextActions = [
+                { label: 'Mark as ready', triggerAttribute: '_ready_to_ship' }
+              ]
+              result.footerActions = [
+                {
+                  label: 'Purchase labels',
+                  triggerAttribute: '_get_rates'
+                }
+              ]
+            } else {
+              result.footerActions = [
+                {
+                  label: 'Mark as ready',
+                  triggerAttribute: '_ready_to_ship'
+                }
+              ]
+            }
           }
         }
         break
