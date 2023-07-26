@@ -24,11 +24,11 @@ importers:
   packages/app:
     dependencies:
       '@commercelayer/app-elements':
-        specifier: ^0.0.56
-        version: 0.0.56(@commercelayer/sdk@5.9.1)(wouter@2.11.0)
+        specifier: ^0.0.57
+        version: 0.0.57(@commercelayer/sdk@5.9.1)(wouter@2.11.0)
       '@commercelayer/app-elements-hook-form':
-        specifier: ^0.0.56
-        version: 0.0.56(@commercelayer/app-elements@0.0.56)(@commercelayer/sdk@5.9.1)(query-string@8.1.0)(react-dom@18.2.0)(react-hook-form@7.45.2)(react@18.2.0)
+        specifier: ^0.0.57
+        version: 0.0.57(@commercelayer/app-elements@0.0.57)(@commercelayer/sdk@5.9.1)(query-string@8.1.0)(react-dom@18.2.0)(react-hook-form@7.45.2)(react@18.2.0)
       '@commercelayer/sdk':
         specifier: 5.9.1
         version: 5.9.1
@@ -197,19 +197,11 @@ packages:
       '@babel/types': 7.22.5
     dev: true
 
-  /@babel/helper-module-imports@7.21.4:
-    resolution: {integrity: sha512-orajc5T2PsRYUN3ZryCEFeMDYwyw09c/pZeaQEZPH0MpKzSvn3e0uXsDBu3k03VI+9DBiRo+l22BfKTpKwa/Wg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/types': 7.22.4
-    dev: false
-
   /@babel/helper-module-imports@7.22.5:
     resolution: {integrity: sha512-8Dl6+HD/cKifutF5qGd/8ZJi84QeAKh+CEe1sBzz8UayBBGg1dAIJrdHOcOM5b2MpzWL2yuotJTtGjETq0qjXg==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.22.5
-    dev: true
 
   /@babel/helper-module-transforms@7.22.9(@babel/core@7.22.9):
     resolution: {integrity: sha512-t+WA2Xn5K+rTeGtC8jCsdAH52bjggG5TKRuRrAGNM/mjIbO4GxvlLMFOEz9wXY5I2XQ60PMFsAG2WIcG82dQMQ==}
@@ -244,15 +236,9 @@ packages:
       '@babel/types': 7.22.5
     dev: true
 
-  /@babel/helper-string-parser@7.21.5:
-    resolution: {integrity: sha512-5pTUx3hAJaZIdW99sJ6ZUUgWq/Y+Hja7TowEnLNMm1VivRgZQL3vpBY3qUACVsvw+yQU6+YgfBVmcbLaZtrA1w==}
-    engines: {node: '>=6.9.0'}
-    dev: false
-
   /@babel/helper-string-parser@7.22.5:
     resolution: {integrity: sha512-mM4COjgZox8U+JcXQwPijIZLElkgEpO5rsERVDJTc2qfCDfERyob6k5WegS14SX18IIjv+XD+GrqNumY5JRCDw==}
     engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/helper-validator-identifier@7.19.1:
     resolution: {integrity: sha512-awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w==}
@@ -261,7 +247,6 @@ packages:
   /@babel/helper-validator-identifier@7.22.5:
     resolution: {integrity: sha512-aJXu+6lErq8ltp+JhkJUfk1MTGyuA4v7f3pA+BJ5HLfNC6nAQ0Cpi9uOquUj8Hehg0aUiHzWQbOVJGao6ztBAQ==}
     engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/helper-validator-option@7.22.5:
     resolution: {integrity: sha512-R3oB6xlIVKUnxNUxbmgq7pKjxpru24zlimpE8WK47fACIlM0II/Hm1RS8IaOI7NgCr6LNS+jl5l75m20npAziw==}
@@ -358,15 +343,6 @@ packages:
       - supports-color
     dev: true
 
-  /@babel/types@7.22.4:
-    resolution: {integrity: sha512-Tx9x3UBHTTsMSW85WB2kphxYQVvrZ/t1FxD88IpSgIjiUJlCm9z+xWIDwyo1vffTwSqteqyznB8ZE9vYYk16zA==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.21.5
-      '@babel/helper-validator-identifier': 7.19.1
-      to-fast-properties: 2.0.0
-    dev: false
-
   /@babel/types@7.22.5:
     resolution: {integrity: sha512-zo3MIHGOkPOfoRXitsgHLjEXmlDaD/5KU1Uzuc9GNiZPhSqVxVRtxuPaSBZDsYZ9qV88AjtMtWW7ww98loJ9KA==}
     engines: {node: '>=6.9.0'}
@@ -374,7 +350,6 @@ packages:
       '@babel/helper-string-parser': 7.22.5
       '@babel/helper-validator-identifier': 7.22.5
       to-fast-properties: 2.0.0
-    dev: true
 
   /@colors/colors@1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -383,18 +358,18 @@ packages:
     dev: true
     optional: true
 
-  /@commercelayer/app-elements-hook-form@0.0.56(@commercelayer/app-elements@0.0.56)(@commercelayer/sdk@5.9.1)(query-string@8.1.0)(react-dom@18.2.0)(react-hook-form@7.45.2)(react@18.2.0):
-    resolution: {integrity: sha512-qHmHs7t0/Rdv8XmAVYUn0x393VlVsTeC1Xt9GIKGGYc2aNOR8CE41Mj3JlgJNNUmaMWJZsBYc1ha31FFh6CoMA==}
+  /@commercelayer/app-elements-hook-form@0.0.57(@commercelayer/app-elements@0.0.57)(@commercelayer/sdk@5.9.1)(query-string@8.1.0)(react-dom@18.2.0)(react-hook-form@7.45.2)(react@18.2.0):
+    resolution: {integrity: sha512-2vPQtpEq1Molyt++hdUAPTlNC6VvAjdzWCZbqrD8V5f0uWR8tJ8HW96ZSQ2iLlSvDtrciB/t6OQpS5Es4/c8fQ==}
     engines: {node: '>=18', pnpm: '>=7'}
     peerDependencies:
-      '@commercelayer/app-elements': 0.0.56
+      '@commercelayer/app-elements': 0.0.57
       '@commercelayer/sdk': ^5.x
       query-string: ^8.1.x
       react: ^18.2.x
       react-dom: ^18.2.x
       react-hook-form: ^7.43.x
     dependencies:
-      '@commercelayer/app-elements': 0.0.56(@commercelayer/sdk@5.9.1)(wouter@2.11.0)
+      '@commercelayer/app-elements': 0.0.57(@commercelayer/sdk@5.9.1)(wouter@2.11.0)
       '@commercelayer/sdk': 5.9.1
       query-string: 8.1.0
       react: 18.2.0
@@ -402,8 +377,8 @@ packages:
       react-hook-form: 7.45.2(react@18.2.0)
     dev: false
 
-  /@commercelayer/app-elements@0.0.56(@commercelayer/sdk@5.9.1)(wouter@2.11.0):
-    resolution: {integrity: sha512-UKtveIO2RH2pQnXcEdobm1xa0T/zBUwh2rcN43i0P847aOSYCyoSVQSSkLv+Wip0hpGPdtCwXY9IQ9wVEYqcjQ==}
+  /@commercelayer/app-elements@0.0.57(@commercelayer/sdk@5.9.1)(wouter@2.11.0):
+    resolution: {integrity: sha512-2GA09iMAWoAs4T2Qw1UwSvRB/3GrHuZOtpVat+hz/IOEfw/sE+z+NeaCb11y5daiCkc9bU8VbNWhAoXVlxJb/g==}
     engines: {node: '>=18', pnpm: '>=7'}
     peerDependencies:
       '@commercelayer/sdk': ^5.x
@@ -485,7 +460,7 @@ packages:
   /@emotion/babel-plugin@11.11.0:
     resolution: {integrity: sha512-m4HEDZleaaCH+XgDDsPF15Ht6wTLsgDTeR3WYj9Q/k76JtWhrJjcP4+/XlG8LGT/Rol9qUfOIztXeA84ATpqPQ==}
     dependencies:
-      '@babel/helper-module-imports': 7.21.4
+      '@babel/helper-module-imports': 7.22.5
       '@babel/runtime': 7.22.3
       '@emotion/hash': 0.9.1
       '@emotion/memoize': 0.8.1
