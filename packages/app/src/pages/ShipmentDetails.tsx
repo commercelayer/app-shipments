@@ -81,7 +81,7 @@ export function ShipmentDetails(): JSX.Element {
       onGoBack={() => {
         goBack({
           setLocation,
-          defaultRelativePath: appRoutes.list.makePath()
+          defaultRelativePath: appRoutes.home.makePath()
         })
       }}
     >
