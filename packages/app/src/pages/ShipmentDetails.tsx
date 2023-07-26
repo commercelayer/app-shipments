@@ -13,6 +13,7 @@ import {
   SkeletonTemplate,
   Spacer,
   formatDate,
+  goBack,
   useTokenProvider
 } from '@commercelayer/app-elements'
 import { Link, useLocation, useRoute } from 'wouter'
@@ -78,7 +79,10 @@ export function ShipmentDetails(): JSX.Element {
         })}`}</SkeletonTemplate>
       }
       onGoBack={() => {
-        setLocation(appRoutes.home.makePath())
+        goBack({
+          setLocation,
+          defaultRelativePath: appRoutes.list.makePath()
+        })
       }}
     >
       <SkeletonTemplate isLoading={isLoading}>

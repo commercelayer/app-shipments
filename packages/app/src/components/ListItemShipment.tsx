@@ -6,16 +6,18 @@ import {
   ListItem,
   Text,
   formatDate,
+  navigateToDetail,
   useTokenProvider,
   withSkeletonTemplate
 } from '@commercelayer/app-elements'
 import { type Shipment } from '@commercelayer/sdk'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 
 export const ListItemShipment = withSkeletonTemplate<{ resource?: Shipment }>(
   ({ resource = makeShipment() }) => {
     const displayStatus = getDisplayStatus(resource)
     const { user } = useTokenProvider()
+    const [, setLocation] = useLocation()
 
     const belongsToOrderWithMultipleShipments =
       (resource.order?.shipments ?? []).length > 1
@@ -35,6 +37,13 @@ export const ListItemShipment = withSkeletonTemplate<{ resource?: Shipment }>(
               background={displayStatus.color}
             />
           }
+          {...navigateToDetail({
+            setLocation,
+            destination: {
+              app: 'shipments',
+              resourceId: resource.id
+            }
+          })}
         >
           <div>
             <Text tag='div' weight='semibold'>
