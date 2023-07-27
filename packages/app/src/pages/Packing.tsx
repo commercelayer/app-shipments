@@ -1,4 +1,4 @@
-import { FormPacking, type PackingFormValues } from '#components/FormPacking'
+import { FormPacking } from '#components/FormPacking'
 import { ShipmentProgress } from '#components/ShipmentProgress'
 import { appRoutes } from '#data/routes'
 import { useCreateParcel } from '#hooks/useCreateParcel'
@@ -109,8 +109,7 @@ export function Packing(): JSX.Element {
             })),
             packageId: '',
             weight: '',
-            unitOfWeight:
-              defaultUnitOfWeight as PackingFormValues['unitOfWeight']
+            unitOfWeight: defaultUnitOfWeight
           }}
           stockLineItems={pickingList}
           stockLocationId={shipment.stock_location.id}
