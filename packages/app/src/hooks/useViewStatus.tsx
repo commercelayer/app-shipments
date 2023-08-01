@@ -63,7 +63,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
           if (!purchased) {
             if (hasCarrierAccounts) {
               result.contextActions = [
-                { label: 'Mark as ready', triggerAttribute: '_ready_to_ship' }
+                { label: 'Ready to ship', triggerAttribute: '_ready_to_ship' }
               ]
               result.footerActions = [
                 {
@@ -74,11 +74,18 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
             } else {
               result.footerActions = [
                 {
-                  label: 'Mark as ready',
+                  label: 'Ready to ship',
                   triggerAttribute: '_ready_to_ship'
                 }
               ]
             }
+          } else {
+            result.footerActions = [
+              {
+                label: 'Ready to ship',
+                triggerAttribute: '_ready_to_ship'
+              }
+            ]
           }
         }
         break
@@ -96,7 +103,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
           ? []
           : [
               {
-                label: 'Mark as shipped',
+                label: 'Shipped',
                 triggerAttribute: '_ship'
               }
             ]
