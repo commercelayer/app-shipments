@@ -30,6 +30,24 @@ export function Packing(): JSX.Element {
   const { createParcelError, createParcelWithItems, isCreatingParcel } =
     useCreateParcel(shipmentId)
 
+  const defaultWeight = useMemo<string>(() => {
+    let totalWeight = 0
+
+    for (const item of shipment.stock_line_items ?? []) {
+      if (
+        item.stock_item?.sku?.weight == null ||
+        item.stock_item?.sku?.weight <= 0
+      ) {
+        totalWeight = 0
+        break
+      }
+
+      totalWeight += item.stock_item.sku.weight * item.quantity
+    }
+
+    return totalWeight > 0 ? totalWeight.toString() : ''
+  }, [shipment])
+
   const defaultUnitOfWeight = useMemo(
     () =>
       uniq(
@@ -108,7 +126,7 @@ export function Packing(): JSX.Element {
               value: item.id
             })),
             packageId: '',
-            weight: '',
+            weight: defaultWeight,
             unitOfWeight: defaultUnitOfWeight
           }}
           stockLineItems={pickingList}
