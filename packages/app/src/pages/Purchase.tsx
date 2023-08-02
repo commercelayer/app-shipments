@@ -177,7 +177,7 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
                 }
               }}
             >
-              Pay {selectedRate?.formatted_rate}
+              Purchase label
             </Button>
           </SkeletonTemplate>
         </Spacer>

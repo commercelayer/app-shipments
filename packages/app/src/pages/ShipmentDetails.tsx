@@ -59,9 +59,9 @@ export function ShipmentDetails(): JSX.Element {
   return (
     <PageLayout
       mode={mode}
-      // TODO: Context Actions are still work in progress
       actionButton={
-        viewStatus.contextActions != null && (
+        viewStatus.contextActions != null &&
+        viewStatus.contextActions.length > 0 && (
           <ShipmentDetailsContextMenu
             shipment={shipment}
             actions={viewStatus.contextActions ?? []}
