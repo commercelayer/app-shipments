@@ -37,7 +37,7 @@ function removeEmptyString<T extends string>(str?: T | null): T | undefined {
  * For the selected packing form item, this helper retrieves
  * the SKU found in the shipment stock_line_items
  */
-export function getSkuFromSelectItem({
+function getSkuFromSelectItem({
   selectedItem,
   shipment
 }: {
@@ -61,7 +61,7 @@ export function getSkuFromSelectItem({
  * ['gr', 'oz']
  * ```
  */
-export function getAvailableUnitsOfWeight(
+function getAvailableUnitsOfWeight(
   shipment: Shipment,
   formValues: PackingFormDefaultValues
 ): Array<PackingFormDefaultValues['unitOfWeight']> {
@@ -83,7 +83,7 @@ export function getAvailableUnitsOfWeight(
  * Calculates the total weight from selected packing form items,
  * but only if all selected items have the same unit of weight.
  */
-export function getTotalWeight(
+function getTotalWeight(
   shipment: Shipment,
   formValues: PackingFormDefaultValues
 ): string {
