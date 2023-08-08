@@ -5,6 +5,9 @@ export * from './resources/line_items'
 export * from './resources/markets'
 export * from './resources/orders'
 export * from './resources/shipments'
+export * from './resources/skus'
+export * from './resources/stock_items'
+export * from './resources/stock_line_items'
 
 export const isMockedId = (id: string): boolean => {
   return id.startsWith('fake-')

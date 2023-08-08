@@ -12,8 +12,7 @@ import {
   Spacer,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import { isEmpty, uniq } from 'lodash'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation, useRoute } from 'wouter'
 
 export function Packing(): JSX.Element {
@@ -29,34 +28,6 @@ export function Packing(): JSX.Element {
   const isValidStatus = shipment?.status === 'packing'
   const { createParcelError, createParcelWithItems, isCreatingParcel } =
     useCreateParcel(shipmentId)
-
-  const defaultWeight = useMemo<string>(() => {
-    let totalWeight = 0
-
-    for (const item of shipment.stock_line_items ?? []) {
-      if (
-        item.stock_item?.sku?.weight == null ||
-        item.stock_item?.sku?.weight <= 0
-      ) {
-        totalWeight = 0
-        break
-      }
-
-      totalWeight += item.stock_item.sku.weight * item.quantity
-    }
-
-    return totalWeight > 0 ? totalWeight.toString() : ''
-  }, [shipment])
-
-  const defaultUnitOfWeight = useMemo(
-    () =>
-      uniq(
-        shipment.stock_line_items
-          ?.map((item) => item.stock_item?.sku?.unit_of_weight)
-          .filter((item) => !isEmpty(item))
-      )[0] ?? 'gr',
-    [shipment]
-  )
 
   useEffect(() => {
     if (pickingList.length === 0 && !isMock(shipment)) {
@@ -126,8 +97,8 @@ export function Packing(): JSX.Element {
               value: item.id
             })),
             packageId: '',
-            weight: defaultWeight,
-            unitOfWeight: defaultUnitOfWeight
+            weight: '',
+            unitOfWeight: undefined
           }}
           stockLineItems={pickingList}
           stockLocationId={shipment.stock_location.id}
@@ -136,6 +107,7 @@ export function Packing(): JSX.Element {
           onSubmit={(formValues) => {
             void createParcelWithItems(formValues)
           }}
+          shipment={shipment}
         />
       </Spacer>
     </PageLayout>
