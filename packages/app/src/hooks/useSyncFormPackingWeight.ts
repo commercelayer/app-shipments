@@ -11,7 +11,6 @@ export function useSyncFormPackingWeight({
 }): void {
   const { watch, setValue, getValues } =
     useFormContext<PackingFormDefaultValues>()
-  console.log('shipment', shipment)
   useEffect(() => {
     const unitsOfWeight = getAvailableUnitsOfWeight(shipment, getValues())
     const defaultUnitOfWeight =
@@ -62,7 +61,7 @@ export function getSkuFromSelectItem({
  * ['gr', 'oz']
  * ```
  */
-function getAvailableUnitsOfWeight(
+export function getAvailableUnitsOfWeight(
   shipment: Shipment,
   formValues: PackingFormDefaultValues
 ): Array<PackingFormDefaultValues['unitOfWeight']> {
@@ -84,7 +83,7 @@ function getAvailableUnitsOfWeight(
  * Calculates the total weight from selected packing form items,
  * but only if all selected items have the same unit of weight.
  */
-function getTotalWeight(
+export function getTotalWeight(
   shipment: Shipment,
   formValues: PackingFormDefaultValues
 ): string {
