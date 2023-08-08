@@ -16,7 +16,20 @@ const packingFormSchema = z.object({
   weight: z.string().nonempty({
     message: 'Please enter a weight'
   }),
-  unitOfWeight: z.enum(allowedUnitsOfWeight),
+  unitOfWeight: z
+    .enum(allowedUnitsOfWeight)
+    .optional()
+    .transform((val, ctx) => {
+      if (val === undefined) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Please select a unit of weight'
+        })
+
+        return z.NEVER
+      }
+      return val
+    }),
   items: z
     .array(
       z.object({
@@ -40,7 +53,7 @@ const packingFormSchema = z.object({
 export type PackingFormValues = z.infer<typeof packingFormSchema>
 
 interface Props {
-  defaultValues: PackingFormValues
+  defaultValues: z.input<typeof packingFormSchema>
   isSubmitting?: boolean
   onSubmit: (
     formValues: PackingFormValues,
@@ -87,7 +100,8 @@ export function FormPacking({
     <Form
       {...methods}
       onSubmit={(values) => {
-        onSubmit(values, methods.setError)
+        // `zodResolver` does not recognize the z.output but is wrongly inferring types from `defaultValues`
+        onSubmit(values as PackingFormValues, methods.setError)
       }}
       key={renderKey}
     >

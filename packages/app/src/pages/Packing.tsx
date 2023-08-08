@@ -12,7 +12,7 @@ import {
   Spacer,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import { isEmpty, uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import { useEffect, useMemo } from 'react'
 import { Link, useLocation, useRoute } from 'wouter'
 
@@ -30,8 +30,26 @@ export function Packing(): JSX.Element {
   const { createParcelError, createParcelWithItems, isCreatingParcel } =
     useCreateParcel(shipmentId)
 
+  const unitsOfWeight = useMemo(
+    () =>
+      uniq(
+        shipment.stock_line_items?.map((item) =>
+          removeEmptyString(item.stock_item?.sku?.unit_of_weight)
+        )
+      ),
+    [shipment]
+  )
+
+  const defaultUnitOfWeight =
+    unitsOfWeight.length === 1 ? unitsOfWeight[0] : undefined
+
   const defaultWeight = useMemo<string>(() => {
     let totalWeight = 0
+
+    if (unitsOfWeight.length > 1) {
+      // can't calculate total weight if there are different units of weight
+      return ''
+    }
 
     for (const item of shipment.stock_line_items ?? []) {
       if (
@@ -46,17 +64,7 @@ export function Packing(): JSX.Element {
     }
 
     return totalWeight > 0 ? totalWeight.toString() : ''
-  }, [shipment])
-
-  const defaultUnitOfWeight = useMemo(
-    () =>
-      uniq(
-        shipment.stock_line_items
-          ?.map((item) => item.stock_item?.sku?.unit_of_weight)
-          .filter((item) => !isEmpty(item))
-      )[0] ?? 'gr',
-    [shipment]
-  )
+  }, [shipment, unitsOfWeight])
 
   useEffect(() => {
     if (pickingList.length === 0 && !isMock(shipment)) {
@@ -140,4 +148,11 @@ export function Packing(): JSX.Element {
       </Spacer>
     </PageLayout>
   )
+}
+
+function removeEmptyString<T extends string>(str?: T | null): T | undefined {
+  if (str === '' || str == null) {
+    return undefined
+  }
+  return str
 }
