@@ -103,7 +103,7 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
           ? []
           : [
               {
-                label: 'Shipped',
+                label: 'Mark as shipped',
                 triggerAttribute: '_ship'
               }
             ]
