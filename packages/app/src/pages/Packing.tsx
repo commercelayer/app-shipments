@@ -12,8 +12,7 @@ import {
   Spacer,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import uniq from 'lodash/uniq'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation, useRoute } from 'wouter'
 
 export function Packing(): JSX.Element {
@@ -29,42 +28,6 @@ export function Packing(): JSX.Element {
   const isValidStatus = shipment?.status === 'packing'
   const { createParcelError, createParcelWithItems, isCreatingParcel } =
     useCreateParcel(shipmentId)
-
-  const unitsOfWeight = useMemo(
-    () =>
-      uniq(
-        shipment.stock_line_items?.map((item) =>
-          removeEmptyString(item.stock_item?.sku?.unit_of_weight)
-        )
-      ),
-    [shipment]
-  )
-
-  const defaultUnitOfWeight =
-    unitsOfWeight.length === 1 ? unitsOfWeight[0] : undefined
-
-  const defaultWeight = useMemo<string>(() => {
-    let totalWeight = 0
-
-    if (unitsOfWeight.length > 1) {
-      // can't calculate total weight if there are different units of weight
-      return ''
-    }
-
-    for (const item of shipment.stock_line_items ?? []) {
-      if (
-        item.stock_item?.sku?.weight == null ||
-        item.stock_item?.sku?.weight <= 0
-      ) {
-        totalWeight = 0
-        break
-      }
-
-      totalWeight += item.stock_item.sku.weight * item.quantity
-    }
-
-    return totalWeight > 0 ? totalWeight.toString() : ''
-  }, [shipment, unitsOfWeight])
 
   useEffect(() => {
     if (pickingList.length === 0 && !isMock(shipment)) {
@@ -134,8 +97,8 @@ export function Packing(): JSX.Element {
               value: item.id
             })),
             packageId: '',
-            weight: defaultWeight,
-            unitOfWeight: defaultUnitOfWeight
+            weight: '',
+            unitOfWeight: undefined
           }}
           stockLineItems={pickingList}
           stockLocationId={shipment.stock_location.id}
@@ -144,15 +107,9 @@ export function Packing(): JSX.Element {
           onSubmit={(formValues) => {
             void createParcelWithItems(formValues)
           }}
+          shipment={shipment}
         />
       </Spacer>
     </PageLayout>
   )
-}
-
-function removeEmptyString<T extends string>(str?: T | null): T | undefined {
-  if (str === '' || str == null) {
-    return undefined
-  }
-  return str
 }

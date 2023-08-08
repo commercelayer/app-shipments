@@ -1,13 +1,13 @@
 import { Button, Spacer, useIsChanged } from '@commercelayer/app-elements'
 import { Form, ValidationApiError } from '@commercelayer/app-elements-hook-form'
-import { type StockLineItem } from '@commercelayer/sdk'
+import { type Shipment, type StockLineItem } from '@commercelayer/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm, type UseFormSetError } from 'react-hook-form'
 import { z } from 'zod'
 import { FormFieldItems } from './FormFieldItems'
 import { FormFieldPackages } from './FormFieldPackages'
-import { FormFieldWeight, allowedUnitsOfWeight } from './FormFieldWeight'
+import { FormFieldWeight } from './FormFieldWeight'
 
 const packingFormSchema = z.object({
   packageId: z.string().nonempty({
@@ -17,7 +17,7 @@ const packingFormSchema = z.object({
     message: 'Please enter a weight'
   }),
   unitOfWeight: z
-    .enum(allowedUnitsOfWeight)
+    .enum(['gr', 'lb', 'oz'])
     .optional()
     .transform((val, ctx) => {
       if (val === undefined) {
@@ -51,9 +51,10 @@ const packingFormSchema = z.object({
 })
 
 export type PackingFormValues = z.infer<typeof packingFormSchema>
+export type PackingFormDefaultValues = z.input<typeof packingFormSchema>
 
 interface Props {
-  defaultValues: z.input<typeof packingFormSchema>
+  defaultValues: PackingFormDefaultValues
   isSubmitting?: boolean
   onSubmit: (
     formValues: PackingFormValues,
@@ -62,10 +63,12 @@ interface Props {
   apiError?: any
   stockLineItems: StockLineItem[]
   stockLocationId: string
+  shipment: Shipment
 }
 
 export function FormPacking({
   onSubmit,
+  shipment,
   defaultValues,
   apiError,
   isSubmitting,
@@ -112,7 +115,7 @@ export function FormPacking({
         <FormFieldItems stockLineItems={stockLineItems} />
       </Spacer>
       <Spacer bottom='12'>
-        <FormFieldWeight />
+        <FormFieldWeight shipment={shipment} />
       </Spacer>
       <Button type='submit' fullWidth disabled={isSubmitting}>
         {isSubmitting === true
