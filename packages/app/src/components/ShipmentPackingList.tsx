@@ -7,22 +7,15 @@ import { useViewStatus } from '#hooks/useViewStatus'
 import {
   A,
   ActionButtons,
-  Avatar,
-  Badge,
   Hr,
   Legend,
-  ListItem,
+  LineItems,
   ShipmentParcels,
   Spacer,
-  Text,
   useCoreSdkProvider,
   withSkeletonTemplate
 } from '@commercelayer/app-elements'
-import type { ListItemProps } from '@commercelayer/app-elements/dist/ui/lists/ListItem'
-import {
-  type Shipment as ShipmentResource,
-  type StockLineItem as StockLineItemResource
-} from '@commercelayer/sdk'
+import { type Shipment as ShipmentResource } from '@commercelayer/sdk'
 import { Link, useLocation } from 'wouter'
 
 interface Props {
@@ -61,17 +54,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
             <Hr />
           </>
         )}
-        {pickingList.map((stockLineItem, index) => {
-          return (
-            <StockLineItem
-              key={stockLineItem.id}
-              borderStyle={
-                pickingList.length - 1 === index ? 'solid' : 'dashed'
-              }
-              stockLineItem={stockLineItem}
-            />
-          )
-        })}
+        <LineItems items={pickingList} />
         <ParcelList shipment={shipment} showTitle={pickingList.length > 0} />
         <ActionButtons
           actions={
@@ -105,49 +88,6 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
     )
   }
 )
-
-const StockLineItem = withSkeletonTemplate<{
-  stockLineItem: StockLineItemResource
-  borderStyle: ListItemProps['borderStyle']
-}>(({ stockLineItem, borderStyle }) => (
-  <ListItem
-    tag='div'
-    alignItems='top'
-    key={stockLineItem.id}
-    borderStyle={borderStyle}
-    padding='y'
-    icon={
-      <Avatar
-        // TODO: after Mike's changes we can use `stockLineItem?.sku?.name`
-        alt={stockLineItem?.stock_item?.sku?.name ?? ''}
-        src={stockLineItem?.stock_item?.sku?.image_url as `https://${string}`}
-      />
-    }
-  >
-    <div>
-      <Text size='small' tag='div' variant='info' weight='medium'>
-        {stockLineItem.sku_code}
-      </Text>
-      <Text tag='div' weight='bold'>
-        {stockLineItem?.stock_item?.sku?.name}
-      </Text>
-      {stockLineItem.bundle_code != null && (
-        <Badge
-          label={`BUNDLE ${stockLineItem.bundle_code}`}
-          variant='secondary'
-        />
-      )}
-    </div>
-    <div>
-      <Text size='small' tag='div' variant='info' weight='medium'>
-        &nbsp;
-      </Text>
-      <Text tag='div' weight='bold' wrap='nowrap'>
-        x {stockLineItem.quantity}
-      </Text>
-    </div>
-  </ListItem>
-))
 
 const ParcelList = withSkeletonTemplate<{
   shipment: ShipmentResource

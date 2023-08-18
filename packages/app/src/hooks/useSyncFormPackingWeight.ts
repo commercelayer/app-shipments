@@ -46,7 +46,7 @@ function getSkuFromSelectItem({
 }): Sku | undefined | null {
   return shipment.stock_line_items?.find(
     (stockLineItem) => stockLineItem.id === selectedItem.value
-  )?.stock_item?.sku
+  )?.sku
 }
 
 /**
