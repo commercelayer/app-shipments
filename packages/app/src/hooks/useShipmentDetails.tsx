@@ -8,10 +8,7 @@ export const shipmentIncludeAttribute = [
   'stock_location',
   'origin_address',
   'stock_line_items',
-
-  'stock_line_items.stock_item.sku',
-  // TODO: TO BE
-  // 'stock_line_items.sku',
+  'stock_line_items.sku',
 
   'parcels',
   'parcels.package',

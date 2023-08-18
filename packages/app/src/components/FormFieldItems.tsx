@@ -24,11 +24,11 @@ export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
             alignItems='center'
             borderStyle='none'
             icon={
-              item.stock_item?.sku?.image_url != null ? (
+              item.sku?.image_url != null ? (
                 <Avatar
-                  alt={item.stock_item.sku.name}
+                  alt={item.sku.name}
                   size='small'
-                  src={item.stock_item.sku.image_url as `https://${string}`}
+                  src={item.sku.image_url as `https://${string}`}
                 />
               ) : undefined
             }
@@ -37,12 +37,12 @@ export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
           >
             <div>
               <Text size='regular' tag='div' weight='bold'>
-                {item.stock_item?.sku?.name}
+                {item.sku?.name}
               </Text>
-              {item.stock_item?.sku?.weight != null ? (
+              {item.sku?.weight != null ? (
                 <Text size='small' tag='div' variant='info'>
-                  {item.stock_item?.sku?.weight}
-                  {item.stock_item?.sku?.unit_of_weight}
+                  {item.sku?.weight}
+                  {item.sku?.unit_of_weight}
                 </Text>
               ) : null}
             </div>

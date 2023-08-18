@@ -36,7 +36,7 @@ export const filtersInstructions: FiltersInstructions = [
     type: 'options',
     sdk: {
       predicate: 'status_in',
-      restrictToOptions: true
+      defaultOptions: allowedStatuses
     },
     render: {
       component: 'toggleButtons',

@@ -1,5 +1,5 @@
 import type { PackingFormDefaultValues } from '#components/FormPacking'
-import { makeShipment, makeSku, makeStockItem, makeStockLineItem } from '#mocks'
+import { makeShipment, makeSku, makeStockLineItem } from '#mocks'
 import type { Shipment } from '@commercelayer/sdk'
 import { act, renderHook } from '@testing-library/react'
 import { useSyncFormPackingWeight } from './useSyncFormPackingWeight'
@@ -41,27 +41,21 @@ describe('useSyncFormPackingWeight', () => {
         {
           ...makeStockLineItem(),
           id: 'firstLineItem',
-          stock_item: {
-            ...makeStockItem(),
-            sku: {
-              ...makeSku(),
-              id: 'sku1',
-              unit_of_weight: 'gr',
-              weight: 100
-            }
+          sku: {
+            ...makeSku(),
+            id: 'sku1',
+            unit_of_weight: 'gr',
+            weight: 100
           }
         },
         {
           ...makeStockLineItem(),
           id: 'secondLineItem',
-          stock_item: {
-            ...makeStockItem(),
-            sku: {
-              ...makeSku(),
-              id: 'sku2',
-              unit_of_weight: 'gr',
-              weight: 150
-            }
+          sku: {
+            ...makeSku(),
+            id: 'sku2',
+            unit_of_weight: 'gr',
+            weight: 150
           }
         }
       ]
@@ -109,26 +103,20 @@ describe('useSyncFormPackingWeight', () => {
         {
           ...makeStockLineItem(),
           id: 'firstLineItem',
-          stock_item: {
-            ...makeStockItem(),
-            sku: {
-              ...makeSku(),
-              id: 'sku1',
-              unit_of_weight: null
-            }
+          sku: {
+            ...makeSku(),
+            id: 'sku1',
+            unit_of_weight: null
           }
         },
         {
           ...makeStockLineItem(),
           id: 'secondLineItem',
-          stock_item: {
-            ...makeStockItem(),
-            sku: {
-              ...makeSku(),
-              id: 'sku2',
-              unit_of_weight: 'gr',
-              weight: 250
-            }
+          sku: {
+            ...makeSku(),
+            id: 'sku2',
+            unit_of_weight: 'gr',
+            weight: 250
           }
         }
       ]
