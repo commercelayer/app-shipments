@@ -60,6 +60,8 @@ function renderAddress({
           <br />
           {address.city} {address.state_code} {address.zip_code} (
           {address.country_code})
+          <br />
+          {address.phone}
         </Text>
         {address.billing_info != null && showBillingInfo === true ? (
           <Text tag='div' variant='info'>
