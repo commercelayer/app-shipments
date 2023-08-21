@@ -172,6 +172,9 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
                       { include: shipmentIncludeAttribute }
                     )
                     .then(async () => {
+                      return await mutateShipment()
+                    })
+                    .then(async () => {
                       setLocation(appRoutes.details.makePath(shipmentId))
                     })
                 }
