@@ -5,7 +5,6 @@ import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import { useTriggerAttribute } from '#hooks/useTriggerAttribute'
 import { useViewStatus } from '#hooks/useViewStatus'
 import {
-  A,
   ActionButtons,
   Hr,
   Legend,
@@ -41,7 +40,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
           actionButton={
             viewStatus.headerAction == null ? null : (
               <Link href={appRoutes.packing.makePath(shipment.id)}>
-                <A>{viewStatus.headerAction.label}</A>
+                <a>{viewStatus.headerAction.label}</a>
               </Link>
             )
           }
