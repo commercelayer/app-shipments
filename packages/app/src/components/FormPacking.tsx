@@ -1,5 +1,10 @@
-import { Button, Spacer, useIsChanged } from '@commercelayer/app-elements'
-import { Form, ValidationApiError } from '@commercelayer/app-elements-hook-form'
+import {
+  Button,
+  HookedForm,
+  HookedValidationApiError,
+  Spacer,
+  useIsChanged
+} from '@commercelayer/app-elements'
 import { type Shipment, type StockLineItem } from '@commercelayer/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
@@ -100,7 +105,7 @@ export function FormPacking({
   })
 
   return (
-    <Form
+    <HookedForm
       {...methods}
       onSubmit={(values) => {
         // `zodResolver` does not recognize the z.output but is wrongly inferring types from `defaultValues`
@@ -124,7 +129,7 @@ export function FormPacking({
               .watch('items')
               .reduce((acc, i) => acc + i.quantity, 0)}`}
       </Button>
-      <ValidationApiError
+      <HookedValidationApiError
         apiError={apiError}
         fieldMap={{
           package: 'packageId',
@@ -132,6 +137,6 @@ export function FormPacking({
           unit_of_weight: 'unitOfWeight'
         }}
       />
-    </Form>
+    </HookedForm>
   )
 }

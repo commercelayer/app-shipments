@@ -8,9 +8,9 @@ import {
   PageLayout,
   Spacer,
   Text,
+  useFilters,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import { useFilters } from '@commercelayer/app-elements-hook-form'
 import type { Shipment } from '@commercelayer/sdk'
 import { useCallback } from 'react'
 import { Link, useLocation } from 'wouter'
