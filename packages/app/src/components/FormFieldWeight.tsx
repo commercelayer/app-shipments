@@ -1,6 +1,9 @@
 import { useSyncFormPackingWeight } from '#hooks/useSyncFormPackingWeight'
-import { Grid } from '@commercelayer/app-elements'
-import { Input, InputSelect } from '@commercelayer/app-elements-hook-form'
+import {
+  Grid,
+  HookedInput,
+  HookedInputSelect
+} from '@commercelayer/app-elements'
 import type { Shipment } from '@commercelayer/sdk'
 import { useFormContext } from 'react-hook-form'
 
@@ -14,8 +17,8 @@ export function FormFieldWeight({
 
   return (
     <Grid columns='2'>
-      <Input label='Weight' name='weight' />
-      <InputSelect
+      <HookedInput label='Weight' name='weight' />
+      <HookedInputSelect
         name='unitOfWeight'
         label='Unit of weight'
         key={watch('unitOfWeight')}

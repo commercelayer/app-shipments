@@ -1,10 +1,10 @@
 import {
   Avatar,
+  HookedValidationError,
   InputCheckboxGroup,
   ListItem,
   Text
 } from '@commercelayer/app-elements'
-import { ValidationError } from '@commercelayer/app-elements-hook-form'
 import type { InputCheckboxGroupProps } from '@commercelayer/app-elements/dist/ui/forms/InputCheckboxGroup'
 import type { StockLineItem } from '@commercelayer/sdk'
 import { useMemo } from 'react'
@@ -73,7 +73,7 @@ export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
           />
         )}
       />
-      <ValidationError name='items' />
+      <HookedValidationError name='items' />
     </>
   )
 }

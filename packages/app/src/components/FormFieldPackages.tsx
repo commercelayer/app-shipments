@@ -1,5 +1,7 @@
 import { repeat } from '#mocks'
 import {
+  HookedInputSelect,
+  HookedValidationError,
   InputFeedback,
   InputRadioGroup,
   Spacer,
@@ -8,10 +10,6 @@ import {
   useCoreSdkProvider,
   type SelectValue
 } from '@commercelayer/app-elements'
-import {
-  InputSelect,
-  ValidationError
-} from '@commercelayer/app-elements-hook-form'
 import type { Package } from '@commercelayer/sdk'
 import type { QueryParamsList } from '@commercelayer/sdk/lib/cjs/query'
 import type { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
@@ -82,7 +80,7 @@ export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
           />
         )}
       />
-      <ValidationError name='packageId' />
+      <HookedValidationError name='packageId' />
     </>
   )
 }
@@ -109,7 +107,7 @@ function InputSelectPackages({
   )
 
   return (
-    <InputSelect
+    <HookedInputSelect
       name='packageId'
       placeholder='Select a package'
       loadAsyncValues={async (hint) => {
