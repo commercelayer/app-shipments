@@ -5,7 +5,7 @@ import {
   EmptyState,
   PageLayout,
   Spacer,
-  useFilters,
+  useResourceFilters,
   useTokenProvider
 } from '@commercelayer/app-elements'
 import { useLocation } from 'wouter'
@@ -18,7 +18,7 @@ export function ShipmentList(): JSX.Element {
   const [, setLocation] = useLocation()
 
   const queryString = useSearch()
-  const { SearchWithNav, FilteredList, viewTitle } = useFilters({
+  const { SearchWithNav, FilteredList, viewTitle } = useResourceFilters({
     instructions: filtersInstructions
   })
   const isInViewPreset = viewTitle != null
@@ -49,7 +49,7 @@ export function ShipmentList(): JSX.Element {
       <Spacer bottom='14'>
         <FilteredList
           type='shipments'
-          Item={ListItemShipment}
+          ItemTemplate={ListItemShipment}
           query={{
             fields: {
               shipments: ['id', 'number', 'updated_at', 'status', 'order'],

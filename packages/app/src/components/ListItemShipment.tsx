@@ -5,7 +5,7 @@ import {
   ListItem,
   Text,
   formatDate,
-  navigateToDetail,
+  navigateTo,
   useTokenProvider,
   withSkeletonTemplate
 } from '@commercelayer/app-elements'
@@ -35,7 +35,7 @@ export const ListItemShipment = withSkeletonTemplate<{ resource?: Shipment }>(
             background={displayStatus.color}
           />
         }
-        {...navigateToDetail({
+        {...navigateTo({
           setLocation,
           destination: {
             app: 'shipments',

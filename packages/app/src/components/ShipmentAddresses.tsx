@@ -1,5 +1,5 @@
 import {
-  Legend,
+  Section,
   Spacer,
   Stack,
   Text,
@@ -84,8 +84,7 @@ export const ShipmentAddresses = withSkeletonTemplate<Props>(
     }
 
     return (
-      <>
-        <Legend border='none' title='Addresses' />
+      <Section title='Addresses' border='none'>
         <Stack>
           {renderAddress({
             label: 'Ship from',
@@ -96,7 +95,7 @@ export const ShipmentAddresses = withSkeletonTemplate<Props>(
             address: shipment.shipping_address
           })}
         </Stack>
-      </>
+      </Section>
     )
   }
 )

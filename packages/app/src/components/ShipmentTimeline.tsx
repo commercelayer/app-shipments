@@ -1,7 +1,7 @@
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import {
   Legend,
-  OrderTimeline,
+  ResourceOrderTimeline,
   Spacer,
   withSkeletonTemplate
 } from '@commercelayer/app-elements'
@@ -17,7 +17,7 @@ export const ShipmentTimeline = withSkeletonTemplate<Props>(({ shipment }) => {
     <>
       <Legend title='Timeline' />
       <Spacer top='8'>
-        <OrderTimeline
+        <ResourceOrderTimeline
           orderId={shipment.order?.id}
           refresh={isValidating}
           attachmentOption={{

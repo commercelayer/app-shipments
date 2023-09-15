@@ -8,7 +8,7 @@ import {
   PageLayout,
   Spacer,
   Text,
-  useFilters,
+  useResourceFilters,
   useTokenProvider
 } from '@commercelayer/app-elements'
 import type { Shipment } from '@commercelayer/sdk'
@@ -25,7 +25,7 @@ export function Home(): JSX.Element {
   const search = useSearch()
   const [, setLocation] = useLocation()
 
-  const { SearchWithNav, adapters } = useFilters({
+  const { SearchWithNav, adapters } = useResourceFilters({
     instructions: filtersInstructions
   })
 

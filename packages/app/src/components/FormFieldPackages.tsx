@@ -61,7 +61,7 @@ export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
             isLoading={isLoading}
             name={name}
             onChange={onChange}
-            direction='row'
+            viewMode='inline'
             showInput={false}
             defaultValue={value}
             options={packages.map((item) => ({
