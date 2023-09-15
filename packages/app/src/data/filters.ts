@@ -1,5 +1,5 @@
 import { getShipmentStatusName } from '#data/dictionaries'
-import type { FiltersInstructions } from '@commercelayer/app-elements/dist/ui/resources/Filters/types'
+import type { FiltersInstructions } from '@commercelayer/app-elements/dist/ui/resources/useResourceFilters/types'
 import type { Shipment } from '@commercelayer/sdk'
 
 const allowedStatuses: Array<Shipment['status']> = [
@@ -20,7 +20,7 @@ export const filtersInstructions: FiltersInstructions = [
       predicate: 'stock_location_id_in'
     },
     render: {
-      component: 'relationshipSelector',
+      component: 'inputResourceGroup',
       props: {
         resource: 'stock_locations',
         fieldForLabel: 'name',
@@ -39,7 +39,7 @@ export const filtersInstructions: FiltersInstructions = [
       defaultOptions: allowedStatuses
     },
     render: {
-      component: 'toggleButtons',
+      component: 'inputToggleButton',
       props: {
         mode: 'multi',
         options: allowedStatuses.map((status) => ({

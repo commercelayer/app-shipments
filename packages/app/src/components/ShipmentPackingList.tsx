@@ -7,9 +7,9 @@ import { useViewStatus } from '#hooks/useViewStatus'
 import {
   ActionButtons,
   Hr,
-  Legend,
-  LineItems,
-  ShipmentParcels,
+  ResourceLineItems,
+  ResourceShipmentParcels,
+  Section,
   Spacer,
   useCoreSdkProvider,
   withSkeletonTemplate
@@ -33,18 +33,17 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
     }
 
     return (
-      <>
-        <Legend
-          title={viewStatus.title}
-          border={pickingList.length > 0 ? undefined : 'none'}
-          actionButton={
-            viewStatus.headerAction == null ? null : (
-              <Link href={appRoutes.packing.makePath(shipment.id)}>
-                <a>{viewStatus.headerAction.label}</a>
-              </Link>
-            )
-          }
-        />
+      <Section
+        title={viewStatus.title}
+        border={pickingList.length > 0 ? undefined : 'none'}
+        actionButton={
+          viewStatus.headerAction == null ? null : (
+            <Link href={appRoutes.packing.makePath(shipment.id)}>
+              <a>{viewStatus.headerAction.label}</a>
+            </Link>
+          )
+        }
+      >
         {viewStatus.progress === true && (
           <>
             <Spacer top='4' bottom='4'>
@@ -53,7 +52,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
             <Hr />
           </>
         )}
-        <LineItems items={pickingList} />
+        <ResourceLineItems items={pickingList} />
         <ParcelList shipment={shipment} showTitle={pickingList.length > 0} />
         <ActionButtons
           actions={
@@ -83,7 +82,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
             ) ?? []
           }
         />
-      </>
+      </Section>
     )
   }
 )
@@ -101,15 +100,20 @@ const ParcelList = withSkeletonTemplate<{
 
   return (
     <Spacer top={showTitle ? '8' : undefined}>
-      {showTitle && <Legend titleSize='small' title='Parcels' border='none' />}
-      <ShipmentParcels
-        shipment={shipment}
-        onRemoveParcel={(id) => {
-          void sdkClient.parcels
-            .delete(id)
-            .then(async () => await mutateShipment())
-        }}
-      />
+      <Section
+        titleSize='small'
+        title={showTitle ? 'Parcels' : undefined}
+        border='none'
+      >
+        <ResourceShipmentParcels
+          shipment={shipment}
+          onRemoveParcel={(id) => {
+            void sdkClient.parcels
+              .delete(id)
+              .then(async () => await mutateShipment())
+          }}
+        />
+      </Section>
     </Spacer>
   )
 })
