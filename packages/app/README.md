@@ -41,7 +41,7 @@ That access token is only required (and will work only) for development mode. In
 
 6. Modify the app to satisfy your requirements. 
 All our Dashboard apps are built using a shared component library [@commercelayer/app-elements](https://github.com/commercelayer/app-elements).
-You can browse the [official documentation](https://github.com/commercelayer/app-elements) to discover more about this topic.
+You can browse the [official documentation](https://commercelayer.github.io/app-elements) to discover more about this topic.
 
 7. Deploy the forked repository to your preferred hosting service. You can deploy with one click below:
 
