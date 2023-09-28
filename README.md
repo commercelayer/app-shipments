@@ -1,3 +1,1 @@
-# app-shipments
-
-Commerce Layer application for managing shipments.
+./packages/app/README.md
