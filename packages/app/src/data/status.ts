@@ -1,5 +1,5 @@
 import { getShipmentStatusName } from '#data/dictionaries'
-import type { BadgeVariant } from '@commercelayer/app-elements/dist/ui/atoms/Badge'
+import type { BadgeProps } from '@commercelayer/app-elements'
 import type { IconProps } from '@commercelayer/app-elements/dist/ui/atoms/Icon'
 import type { Shipment } from '@commercelayer/sdk'
 
@@ -8,7 +8,7 @@ interface DisplayStatus {
   label: string
   icon: IconProps['name']
   color: IconProps['background']
-  badgeVariant: BadgeVariant
+  badgeVariant: BadgeProps['variant']
 }
 
 export function getDisplayStatus(shipment: Shipment): DisplayStatus {

@@ -25,10 +25,9 @@ export const ShipmentSteps = withSkeletonTemplate<Props>(
             </Text>
           </Spacer>
           {shipment.status !== undefined && (
-            <Badge
-              label={displayStatus.label.toUpperCase()}
-              variant={displayStatus.badgeVariant}
-            />
+            <Badge variant={displayStatus.badgeVariant}>
+              {displayStatus.label.toUpperCase()}
+            </Badge>
           )}
         </div>
         <div>

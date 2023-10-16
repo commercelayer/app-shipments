@@ -8,7 +8,7 @@ import {
   Text,
   useCoreApi,
   useCoreSdkProvider,
-  type SelectValue
+  type InputSelectValue
 } from '@commercelayer/app-elements'
 import type { Package } from '@commercelayer/sdk'
 import type { QueryParamsList } from '@commercelayer/sdk/lib/cjs/query'
@@ -98,7 +98,7 @@ function InputSelectPackages({
   const { sdkClient } = useCoreSdkProvider()
 
   const packagesToSelectOptions = useCallback(
-    (packages: Package[]): SelectValue[] =>
+    (packages: Package[]): InputSelectValue[] =>
       packages.map((item) => ({
         value: item.id,
         label: `${item.name} - ${makeSizeString(item)}`
