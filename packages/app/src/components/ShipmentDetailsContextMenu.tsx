@@ -1,6 +1,6 @@
 import { useTriggerAttribute } from '#hooks/useTriggerAttribute'
 import type { Action } from '#hooks/useViewStatus'
-import { ContextMenu, DropdownMenuItem } from '@commercelayer/app-elements'
+import { Dropdown, DropdownItem } from '@commercelayer/app-elements'
 import type { Shipment } from '@commercelayer/sdk'
 
 export const ShipmentDetailsContextMenu: React.FC<{
@@ -10,9 +10,9 @@ export const ShipmentDetailsContextMenu: React.FC<{
   const { trigger } = useTriggerAttribute(shipment.id)
 
   return (
-    <ContextMenu
-      menuItems={actions.map((action) => (
-        <DropdownMenuItem
+    <Dropdown
+      dropdownItems={actions.map((action) => (
+        <DropdownItem
           key={action.label}
           label={action.label}
           onClick={() => {
