@@ -1,9 +1,8 @@
 import { repeat } from '#mocks'
 import {
+  HookedInputRadioGroup,
   HookedInputSelect,
-  HookedValidationError,
   InputFeedback,
-  InputRadioGroup,
   Spacer,
   Text,
   useCoreApi,
@@ -15,7 +14,6 @@ import type { QueryParamsList } from '@commercelayer/sdk/lib/cjs/query'
 import type { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
 import isEmpty from 'lodash/isEmpty'
 import { useCallback } from 'react'
-import { Controller } from 'react-hook-form'
 import { makePackage } from 'src/mocks/resources/packages'
 
 interface Props {
@@ -53,35 +51,25 @@ export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
 
   // radio buttons for majority of the cases
   return (
-    <>
-      <Controller
-        name='packageId'
-        render={({ field: { onChange, value, name } }) => (
-          <InputRadioGroup
-            isLoading={isLoading}
-            name={name}
-            onChange={onChange}
-            viewMode='inline'
-            showInput={false}
-            defaultValue={value}
-            options={packages.map((item) => ({
-              value: item.id,
-              content: (
-                <>
-                  <Spacer bottom='2'>
-                    <Text weight='bold' tag='div'>
-                      {item.name}
-                    </Text>
-                  </Spacer>
-                  <Text variant='info'>{makeSizeString(item)}</Text>
-                </>
-              )
-            }))}
-          />
-        )}
-      />
-      <HookedValidationError name='packageId' />
-    </>
+    <HookedInputRadioGroup
+      isLoading={isLoading}
+      name='packageId'
+      viewMode='grid'
+      showInput={false}
+      options={packages.map((item) => ({
+        value: item.id,
+        content: (
+          <>
+            <Spacer bottom='2'>
+              <Text weight='bold' tag='div'>
+                {item.name}
+              </Text>
+            </Spacer>
+            <Text variant='info'>{makeSizeString(item)}</Text>
+          </>
+        )
+      }))}
+    />
   )
 }
 
