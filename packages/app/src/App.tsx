@@ -8,6 +8,7 @@ import { ShipmentList } from '#pages/ShipmentList'
 import {
   CoreSdkProvider,
   ErrorBoundary,
+  GTMProvider,
   MetaTags,
   TokenProvider
 } from '@commercelayer/app-elements'
@@ -38,34 +39,36 @@ export function App(): JSX.Element {
           loadingElement={<div />}
           organizationSlug={import.meta.env.PUBLIC_SELF_HOSTED_SLUG}
         >
-          <MetaTags />
-          <CoreSdkProvider>
-            <Router base={basePath}>
-              <Switch>
-                <Route path={appRoutes.home.path}>
-                  <Home />
-                </Route>
-                <Route path={appRoutes.filters.path}>
-                  <Filters />
-                </Route>
-                <Route path={appRoutes.list.path}>
-                  <ShipmentList />
-                </Route>
-                <Route path={appRoutes.details.path}>
-                  <ShipmentDetails />
-                </Route>
-                <Route path={appRoutes.packing.path}>
-                  <Packing />
-                </Route>
-                <Route path={appRoutes.purchase.path}>
-                  <Purchase />
-                </Route>
-                <Route>
-                  <ErrorNotFound />
-                </Route>
-              </Switch>
-            </Router>
-          </CoreSdkProvider>
+          <GTMProvider gtmId={window.clAppConfig.gtmId}>
+            <MetaTags />
+            <CoreSdkProvider>
+              <Router base={basePath}>
+                <Switch>
+                  <Route path={appRoutes.home.path}>
+                    <Home />
+                  </Route>
+                  <Route path={appRoutes.filters.path}>
+                    <Filters />
+                  </Route>
+                  <Route path={appRoutes.list.path}>
+                    <ShipmentList />
+                  </Route>
+                  <Route path={appRoutes.details.path}>
+                    <ShipmentDetails />
+                  </Route>
+                  <Route path={appRoutes.packing.path}>
+                    <Packing />
+                  </Route>
+                  <Route path={appRoutes.purchase.path}>
+                    <Purchase />
+                  </Route>
+                  <Route>
+                    <ErrorNotFound />
+                  </Route>
+                </Switch>
+              </Router>
+            </CoreSdkProvider>
+          </GTMProvider>
         </TokenProvider>
       </SWRConfig>
     </ErrorBoundary>
