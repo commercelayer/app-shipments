@@ -22,6 +22,7 @@ describe('useSyncFormPackingWeight', () => {
             return formState
           },
           setValue: (key: keyof PackingFormDefaultValues, value: any) => {
+            // @ts-expect-error - this is a mock
             formState[key] = value
           },
           getValues: (): PackingFormDefaultValues => formState
