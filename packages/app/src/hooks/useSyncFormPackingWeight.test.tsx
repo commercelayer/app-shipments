@@ -1,4 +1,4 @@
-import type { PackingFormDefaultValues } from '#components/FormPacking'
+import type { PackingFormDefaultValues } from '#data/packingFormSchema'
 import { makeShipment, makeSku, makeStockLineItem } from '#mocks'
 import type { Shipment } from '@commercelayer/sdk'
 import { act, renderHook } from '@testing-library/react'

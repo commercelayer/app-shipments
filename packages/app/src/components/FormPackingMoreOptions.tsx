@@ -1,11 +1,11 @@
-import { type PackingFormValues } from '#components/FormPacking'
 import {
   getContentType,
   getDeliveryConfirmation,
   getIncotermsRule,
   getNonDeliveryOption,
   getRestrictionType
-} from '#data/parcelCustomsInfo'
+} from '#data/customsInfo'
+import type { PackingFormValues } from '#data/packingFormSchema'
 import {
   Card,
   HookedInput,

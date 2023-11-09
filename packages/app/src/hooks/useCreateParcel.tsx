@@ -1,4 +1,4 @@
-import { type PackingFormValues } from '#components/FormPacking'
+import type { PackingFormValues } from '#data/packingFormSchema'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import { useCoreSdkProvider } from '@commercelayer/app-elements'
 import type {
