@@ -23,7 +23,9 @@ interface Props {
   stockLocationId: string
 }
 
-export function FormFieldPackages({ stockLocationId }: Props): JSX.Element {
+export function FormPackingFieldPackages({
+  stockLocationId
+}: Props): JSX.Element {
   const { data: packages, isLoading } = useCoreApi(
     'packages',
     'list',

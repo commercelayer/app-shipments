@@ -1,4 +1,3 @@
-import { FormFieldsCustomsInfo } from '#components/FormFieldsCustomsInfo'
 import {
   getContentType,
   getDeliveryConfirmation,
@@ -19,9 +18,10 @@ import isEmpty from 'lodash/isEmpty'
 import { useState } from 'react'
 import { useForm, type UseFormSetError } from 'react-hook-form'
 import { z } from 'zod'
-import { FormFieldItems } from './FormFieldItems'
-import { FormFieldPackages } from './FormFieldPackages'
-import { FormFieldWeight } from './FormFieldWeight'
+import { FormPackingFieldItems } from './FormPackingFieldItems'
+import { FormPackingFieldPackages } from './FormPackingFieldPackages'
+import { FormPackingFieldWeight } from './FormPackingFieldWeight'
+import { FormPackingMoreOptions } from './FormPackingMoreOptions'
 
 const packingFormSchema = z
   .object({
@@ -148,7 +148,7 @@ export function FormPacking({
   })
 
   // when stockLineItems changes, we need to re-render the form
-  // to update defaults values for FormFieldItems and FormFieldPackages
+  // to update defaults values for FormPackingFieldItems and FormPackingFieldPackages
   const [renderKey, setRenderKey] = useState(0)
   useIsChanged({
     value: stockLineItems,
@@ -176,16 +176,16 @@ export function FormPacking({
       key={renderKey}
     >
       <Spacer bottom='8'>
-        <FormFieldPackages stockLocationId={stockLocationId} />
+        <FormPackingFieldPackages stockLocationId={stockLocationId} />
       </Spacer>
       <Spacer bottom='8'>
-        <FormFieldItems stockLineItems={stockLineItems} />
+        <FormPackingFieldItems stockLineItems={stockLineItems} />
       </Spacer>
       <Spacer bottom='8'>
-        <FormFieldWeight shipment={shipment} />
+        <FormPackingFieldWeight shipment={shipment} />
       </Spacer>
       <Spacer bottom='8'>
-        <FormFieldsCustomsInfo />
+        <FormPackingMoreOptions />
       </Spacer>
       <Button type='submit' fullWidth disabled={isSubmitting}>
         {isSubmitting === true

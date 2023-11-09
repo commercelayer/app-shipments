@@ -13,7 +13,7 @@ interface Props {
   stockLineItems: StockLineItem[]
 }
 
-export function FormFieldItems({ stockLineItems }: Props): JSX.Element {
+export function FormPackingFieldItems({ stockLineItems }: Props): JSX.Element {
   const options: InputCheckboxGroupProps['options'] = useMemo(
     () =>
       stockLineItems.map((item) => ({
