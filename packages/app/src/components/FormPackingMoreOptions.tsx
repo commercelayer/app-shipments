@@ -177,7 +177,7 @@ const CustomsInfo: FC = () => {
 }
 
 /**
- * Group set of fields (children) within a checkbox. Children will be only visible when checkout is checked.
+ * Group set of fields (children) within a checkbox. Children will be only visible when element is checked.
  * When the checkbox is unchecked, the children are unmounted and the fields specified in `fieldsToReset` are emptied.
  */
 const OptionsGroup: FC<{
