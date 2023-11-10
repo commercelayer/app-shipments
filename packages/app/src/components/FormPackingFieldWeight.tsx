@@ -7,7 +7,7 @@ import {
 import type { Shipment } from '@commercelayer/sdk'
 import { useFormContext } from 'react-hook-form'
 
-export function FormFieldWeight({
+export function FormPackingFieldWeight({
   shipment
 }: {
   shipment: Shipment

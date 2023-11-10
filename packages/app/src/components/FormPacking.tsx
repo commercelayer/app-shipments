@@ -1,3 +1,8 @@
+import type {
+  PackingFormDefaultValues,
+  PackingFormValues
+} from '#data/packingFormSchema'
+import { packingFormSchema } from '#data/packingFormSchema'
 import {
   Button,
   HookedForm,
@@ -9,54 +14,10 @@ import { type Shipment, type StockLineItem } from '@commercelayer/sdk'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm, type UseFormSetError } from 'react-hook-form'
-import { z } from 'zod'
-import { FormFieldItems } from './FormFieldItems'
-import { FormFieldPackages } from './FormFieldPackages'
-import { FormFieldWeight } from './FormFieldWeight'
-
-const packingFormSchema = z.object({
-  packageId: z.string().nonempty({
-    message: 'Please select a package'
-  }),
-  weight: z.string().nonempty({
-    message: 'Please enter a weight'
-  }),
-  unitOfWeight: z
-    .enum(['gr', 'lb', 'oz'])
-    .optional()
-    .transform((val, ctx) => {
-      if (val === undefined) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Please select a unit of weight'
-        })
-
-        return z.NEVER
-      }
-      return val
-    }),
-  items: z
-    .array(
-      z.object({
-        value: z.string().nonempty(),
-        quantity: z.number()
-      })
-    )
-    .superRefine((val, ctx) => {
-      if (val.length === 0) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.too_small,
-          minimum: 1,
-          type: 'array',
-          inclusive: true,
-          message: 'Please select at least one item'
-        })
-      }
-    })
-})
-
-export type PackingFormValues = z.infer<typeof packingFormSchema>
-export type PackingFormDefaultValues = z.input<typeof packingFormSchema>
+import { FormPackingFieldItems } from './FormPackingFieldItems'
+import { FormPackingFieldPackages } from './FormPackingFieldPackages'
+import { FormPackingFieldWeight } from './FormPackingFieldWeight'
+import { FormPackingMoreOptions } from './FormPackingMoreOptions'
 
 interface Props {
   defaultValues: PackingFormDefaultValues
@@ -86,7 +47,7 @@ export function FormPacking({
   })
 
   // when stockLineItems changes, we need to re-render the form
-  // to update defaults values for FormFieldItems and FormFieldPackages
+  // to update defaults values for FormPackingFieldItems and FormPackingFieldPackages
   const [renderKey, setRenderKey] = useState(0)
   useIsChanged({
     value: stockLineItems,
@@ -113,14 +74,17 @@ export function FormPacking({
       }}
       key={renderKey}
     >
-      <Spacer bottom='12'>
-        <FormFieldPackages stockLocationId={stockLocationId} />
+      <Spacer bottom='8'>
+        <FormPackingFieldPackages stockLocationId={stockLocationId} />
       </Spacer>
-      <Spacer bottom='12'>
-        <FormFieldItems stockLineItems={stockLineItems} />
+      <Spacer bottom='8'>
+        <FormPackingFieldItems stockLineItems={stockLineItems} />
       </Spacer>
-      <Spacer bottom='12'>
-        <FormFieldWeight shipment={shipment} />
+      <Spacer bottom='8'>
+        <FormPackingFieldWeight shipment={shipment} />
+      </Spacer>
+      <Spacer bottom='8'>
+        <FormPackingMoreOptions />
       </Spacer>
       <Button type='submit' fullWidth disabled={isSubmitting}>
         {isSubmitting === true

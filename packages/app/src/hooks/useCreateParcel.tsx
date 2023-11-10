@@ -1,4 +1,4 @@
-import { type PackingFormValues } from '#components/FormPacking'
+import type { PackingFormValues } from '#data/packingFormSchema'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import { useCoreSdkProvider } from '@commercelayer/app-elements'
 import type {
@@ -35,7 +35,21 @@ export function useCreateParcel(shipmentId: string): CreateParcelHook {
             weight: parseInt(formValues.weight, 10),
             unit_of_weight: formValues.unitOfWeight,
             package: sdkClient.packages.relationship(formValues.packageId),
-            shipment: sdkClient.shipments.relationship(shipmentId)
+            shipment: sdkClient.shipments.relationship(shipmentId),
+
+            // more options
+            incoterm: formValues.incoterm,
+            delivery_confirmation: formValues.delivery_confirmation,
+            // customs info
+            eel_pfc: formValues.eel_pfc,
+            contents_type: formValues.contents_type,
+            contents_explanation: formValues.contents_explanation,
+            non_delivery_option: formValues.non_delivery_option,
+            restriction_type: formValues.restriction_type,
+            restriction_comments: formValues.restriction_comments,
+            customs_signer: formValues.customs_signer,
+            customs_certify: formValues.customs_certify,
+            customs_info_required: formValues.customs_info_required
           })
 
           await Promise.all(

@@ -1,4 +1,4 @@
-import { type PackingFormDefaultValues } from '#components/FormPacking'
+import { type PackingFormDefaultValues } from '#data/packingFormSchema'
 import type { Shipment, Sku } from '@commercelayer/sdk'
 import uniq from 'lodash/uniq'
 import { useEffect } from 'react'
