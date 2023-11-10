@@ -20,7 +20,7 @@ import { useEffect, type FC, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 /**
- * This component renders the "More info" section of the packing form.
+ * This component renders the "More options" section of the packing form.
  * It contains a optional fields that are not required to create a parcel, but add more information for the carrier.
  * - IncotermsRules
  * - DeliveryConfirmation
@@ -30,7 +30,7 @@ export const FormPackingMoreOptions: FC = () => {
   return (
     <>
       <Spacer bottom='4'>
-        <Legend>More info</Legend>
+        <Legend>More options</Legend>
       </Spacer>
 
       <IncotermsRules />
@@ -217,14 +217,14 @@ const OptionsGroup: FC<{
   )
 
   return (
-    <Spacer bottom='4'>
+    <Spacer bottom='2'>
       <fieldset>
         <HookedInputCheckbox name={name}>
           <Text weight='semibold'>{label}</Text>
         </HookedInputCheckbox>
 
         {isActive && (
-          <Spacer top='4' left='8'>
+          <Spacer top='4' left='8' bottom='2'>
             {children}
           </Spacer>
         )}

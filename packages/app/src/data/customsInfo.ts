@@ -65,7 +65,9 @@ export function getIncotermsRule() {
 
   return {
     acceptedValues,
-    selectOptions: dictionaryToSelectOption(dictionary),
+    selectOptions: dictionaryToSelectOption(dictionary).sort((a, b) =>
+      a.label.localeCompare(b.label)
+    ),
     getLabel: (value: IncotermsRule) => dictionary[value] ?? value
   }
 }
