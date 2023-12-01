@@ -7,10 +7,12 @@ import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import { useViewStatus } from '#hooks/useViewStatus'
+import { isMockedId } from '#mocks'
 import {
   Button,
   EmptyState,
   PageLayout,
+  ResourceTags,
   SkeletonTemplate,
   Spacer,
   Text,
@@ -94,10 +96,25 @@ export function ShipmentDetails(): JSX.Element {
           defaultRelativePath: appRoutes.home.makePath()
         })
       }}
+      gap='only-top'
     >
       <SkeletonTemplate isLoading={isLoading}>
         <Spacer bottom='4'>
-          <ShipmentSteps shipment={shipment} />
+          {!isMockedId(shipment.id) && (
+            <Spacer top='6'>
+              <ResourceTags
+                resourceType='shipments'
+                resourceId={shipment.id}
+                overlay={{ title: 'Edit tags', description: pageTitle }}
+                onTagClick={(tagId) => {
+                  setLocation(appRoutes.list.makePath(`tags_id_in=${tagId}`))
+                }}
+              />
+            </Spacer>
+          )}
+          <Spacer top='14'>
+            <ShipmentSteps shipment={shipment} />
+          </Spacer>
           <Spacer top='14'>
             <ShipmentInfo shipment={shipment} />
           </Spacer>
