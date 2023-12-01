@@ -10,6 +10,7 @@ export const shipmentIncludeAttribute = [
   'origin_address',
   'stock_line_items',
   'stock_line_items.sku',
+  'stock_transfers',
 
   'parcels',
   'parcels.package',
