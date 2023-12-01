@@ -24,11 +24,11 @@ importers:
   packages/app:
     dependencies:
       '@commercelayer/app-elements':
-        specifier: ^1.7.1
-        version: 1.7.1(@commercelayer/sdk@5.22.1)(query-string@8.1.0)(react-dom@18.2.0)(react-gtm-module@2.0.11)(react-hook-form@7.48.2)(react@18.2.0)(wouter@2.12.1)
+        specifier: ^1.8.1
+        version: 1.8.1(@commercelayer/sdk@5.23.2)(query-string@8.1.0)(react-dom@18.2.0)(react-gtm-module@2.0.11)(react-hook-form@7.48.2)(react@18.2.0)(wouter@2.12.1)
       '@commercelayer/sdk':
-        specifier: 5.22.1
-        version: 5.22.1
+        specifier: 5.23.2
+        version: 5.23.2
       '@hookform/resolvers':
         specifier: ^3.3.2
         version: 3.3.2(react-hook-form@7.48.2)
@@ -77,25 +77,25 @@ importers:
         version: 18.2.17
       '@vitejs/plugin-react':
         specifier: ^4.2.0
-        version: 4.2.0(vite@5.0.2)
+        version: 4.2.0(vite@5.0.4)
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
       jsdom:
-        specifier: ^23.0.0
-        version: 23.0.0
+        specifier: ^23.0.1
+        version: 23.0.1
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
       vite:
-        specifier: ^5.0.2
-        version: 5.0.2(@types/node@20.2.5)
+        specifier: ^5.0.4
+        version: 5.0.4(@types/node@20.2.5)
       vite-tsconfig-paths:
         specifier: ^4.2.1
-        version: 4.2.1(typescript@5.3.2)(vite@5.0.2)
+        version: 4.2.1(typescript@5.3.2)(vite@5.0.4)
       vitest:
         specifier: ^0.34.6
-        version: 0.34.6(jsdom@23.0.0)
+        version: 0.34.6(jsdom@23.0.1)
 
 packages:
 
@@ -103,11 +103,6 @@ packages:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /@ac-dev/countries-service@1.2.0:
-    resolution: {integrity: sha512-9+LUUTALFa17EKL7l93ExcjYgHdkcHWlOyvAqMdrVWie6/105eGryQqaba0yIwM4rBYfvs/b/KJHkbcAdSFD2Q==}
-    engines: {node: '>=10'}
-    dev: false
 
   /@ampproject/remapping@2.2.1:
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
@@ -379,8 +374,8 @@ packages:
     dev: true
     optional: true
 
-  /@commercelayer/app-elements@1.7.1(@commercelayer/sdk@5.22.1)(query-string@8.1.0)(react-dom@18.2.0)(react-gtm-module@2.0.11)(react-hook-form@7.48.2)(react@18.2.0)(wouter@2.12.1):
-    resolution: {integrity: sha512-W0egpssXg73lx5MgTRcTDH88z9NPWjURJ6Xo04w6ecHamNePBZkC6KIuul6wrpw697cJA33vZcGHkLki2g+9iw==}
+  /@commercelayer/app-elements@1.8.1(@commercelayer/sdk@5.23.2)(query-string@8.1.0)(react-dom@18.2.0)(react-gtm-module@2.0.11)(react-hook-form@7.48.2)(react@18.2.0)(wouter@2.12.1):
+    resolution: {integrity: sha512-1tgSK2s2urVQ6n51Jc9Z5zAM/ErqIhQzNN58Yh0tjeTupnaNSPHiMRgYwIEhGEEIor0EMWyWrHbqaHId1n35yQ==}
     engines: {node: '>=18', pnpm: '>=7'}
     peerDependencies:
       '@commercelayer/sdk': ^5.x
@@ -391,8 +386,7 @@ packages:
       react-hook-form: ^7.43.x
       wouter: ^2.x
     dependencies:
-      '@ac-dev/countries-service': 1.2.0
-      '@commercelayer/sdk': 5.22.1
+      '@commercelayer/sdk': 5.23.2
       '@types/lodash': 4.14.202
       '@types/react': 18.2.39
       '@types/react-datepicker': 4.19.2(react-dom@18.2.0)(react@18.2.0)
@@ -461,8 +455,8 @@ packages:
       - supports-color
     dev: true
 
-  /@commercelayer/sdk@5.22.1:
-    resolution: {integrity: sha512-eF3vlF1sK45tMRydbMg+bQGx6yZWnjg1B+PKwxtFNmsfcURvazBqQtRMv9Tab/3PX2lEFvAFrxkjoxafRUFV8Q==}
+  /@commercelayer/sdk@5.23.2:
+    resolution: {integrity: sha512-ldilNT+PEMJfkibq5uGpGQ/5/FPCb/xapZkD2p1PfYaxvST97rtmZCPEI6BuOhtcmpLv7jtD/6tWIRlGqWGE+A==}
     engines: {node: '>=16 || ^14.17'}
     dependencies:
       axios: 1.6.1
@@ -1802,7 +1796,7 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-react@4.2.0(vite@5.0.2):
+  /@vitejs/plugin-react@4.2.0(vite@5.0.4):
     resolution: {integrity: sha512-+MHTH/e6H12kRp5HUkzOGqPMksezRMmW+TNzlh/QXfI8rRf6l2Z2yH/v12no1UvTwhZgEDMuQ7g7rrfMseU6FQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -1813,7 +1807,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.3)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.0.2(@types/node@20.2.5)
+      vite: 5.0.4(@types/node@20.2.5)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4906,11 +4900,11 @@ packages:
       argparse: 2.0.1
     dev: true
 
-  /jsdom@23.0.0:
-    resolution: {integrity: sha512-cbL/UCtohJguhFC7c2/hgW6BeZCNvP7URQGnx9tSJRYKCdnfbfWOrtuLTMfiB2VxKsx5wPHVsh/J0aBy9lIIhQ==}
+  /jsdom@23.0.1:
+    resolution: {integrity: sha512-2i27vgvlUsGEBO9+/kJQRbtqtm+191b5zAZrU/UezVmnC2dlDAFLgDYJvAEi94T4kjsRKkezEtLQTgsNEsW2lQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      canvas: ^3.0.0
+      canvas: ^2.11.2
     peerDependenciesMeta:
       canvas:
         optional: true
@@ -7683,7 +7677,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       psl: 1.9.0
-      punycode: 2.3.0
+      punycode: 2.3.1
       universalify: 0.2.0
       url-parse: 1.5.10
     dev: true
@@ -8064,7 +8058,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.2(@types/node@20.2.5)
+      vite: 5.0.4(@types/node@20.2.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8076,7 +8070,7 @@ packages:
       - terser
     dev: true
 
-  /vite-tsconfig-paths@4.2.1(typescript@5.3.2)(vite@5.0.2):
+  /vite-tsconfig-paths@4.2.1(typescript@5.3.2)(vite@5.0.4):
     resolution: {integrity: sha512-GNUI6ZgPqT3oervkvzU+qtys83+75N/OuDaQl7HmOqFTb0pjZsuARrRipsyJhJ3enqV8beI1xhGbToR4o78nSQ==}
     peerDependencies:
       vite: '*'
@@ -8087,14 +8081,14 @@ packages:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 2.1.1(typescript@5.3.2)
-      vite: 5.0.2(@types/node@20.2.5)
+      vite: 5.0.4(@types/node@20.2.5)
     transitivePeerDependencies:
       - supports-color
       - typescript
     dev: true
 
-  /vite@5.0.2(@types/node@20.2.5):
-    resolution: {integrity: sha512-6CCq1CAJCNM1ya2ZZA7+jS2KgnhbzvxakmlIjN24cF/PXhRMzpM/z8QgsVJA/Dm5fWUWnVEsmtBoMhmerPxT0g==}
+  /vite@5.0.4(@types/node@20.2.5):
+    resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -8129,7 +8123,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitest@0.34.6(jsdom@23.0.0):
+  /vitest@0.34.6(jsdom@23.0.1):
     resolution: {integrity: sha512-+5CALsOvbNKnS+ZHMXtuUC7nL8/7F1F2DnHGjSsszX8zCjWSSviphCb/NuS9Nzf4Q03KyyDRBAXhF/8lffME4Q==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -8173,7 +8167,7 @@ packages:
       cac: 6.7.14
       chai: 4.3.10
       debug: 4.3.4
-      jsdom: 23.0.0
+      jsdom: 23.0.1
       local-pkg: 0.4.3
       magic-string: 0.30.1
       pathe: 1.1.1
@@ -8182,7 +8176,7 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.7.0
-      vite: 5.0.2(@types/node@20.2.5)
+      vite: 5.0.4(@types/node@20.2.5)
       vite-node: 0.34.6(@types/node@20.2.5)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
