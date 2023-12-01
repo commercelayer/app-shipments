@@ -52,11 +52,25 @@ export function ShipmentList(): JSX.Element {
           ItemTemplate={ListItemShipment}
           query={{
             fields: {
-              shipments: ['id', 'number', 'updated_at', 'status', 'order'],
+              shipments: [
+                'id',
+                'number',
+                'updated_at',
+                'status',
+                'order',
+                'stock_location',
+                'stock_transfers'
+              ],
               orders: ['market', 'shipments'],
               markets: ['name']
             },
-            include: ['order', 'order.market', 'order.shipments'],
+            include: [
+              'order',
+              'order.market',
+              'order.shipments',
+              'stock_location',
+              'stock_transfers'
+            ],
             pageSize: 25,
             sort: {
               updated_at: 'desc'
