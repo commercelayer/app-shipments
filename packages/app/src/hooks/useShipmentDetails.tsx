@@ -3,6 +3,7 @@ import { useCoreApi } from '@commercelayer/app-elements'
 
 export const shipmentIncludeAttribute = [
   'order',
+  'order.customer',
   'shipping_method',
   'shipping_address',
   'stock_location',

@@ -1,5 +1,6 @@
 import { ShipmentAddresses } from '#components/ShipmentAddresses'
 import { ShipmentDetailsContextMenu } from '#components/ShipmentDetailsContextMenu'
+import { ShipmentInfo } from '#components/ShipmentInfo'
 import { ShipmentPackingList } from '#components/ShipmentPackingList'
 import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
@@ -88,6 +89,9 @@ export function ShipmentDetails(): JSX.Element {
       <SkeletonTemplate isLoading={isLoading}>
         <Spacer bottom='4'>
           <ShipmentSteps shipment={shipment} />
+          <Spacer top='14'>
+            <ShipmentInfo shipment={shipment} />
+          </Spacer>
           <Spacer top='14'>
             <ShipmentPackingList shipment={shipment} />
           </Spacer>
