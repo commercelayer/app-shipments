@@ -13,10 +13,12 @@ import {
   PageLayout,
   SkeletonTemplate,
   Spacer,
+  Text,
   formatDate,
   goBack,
   useTokenProvider
 } from '@commercelayer/app-elements'
+import isEmpty from 'lodash/isEmpty'
 import { Link, useLocation, useRoute } from 'wouter'
 
 export function ShipmentDetails(): JSX.Element {
@@ -73,11 +75,18 @@ export function ShipmentDetails(): JSX.Element {
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>
       }
       description={
-        <SkeletonTemplate isLoading={isLoading}>{`Updated on ${formatDate({
-          isoDate: shipment.updated_at,
-          timezone: user?.timezone,
-          format: 'full'
-        })}`}</SkeletonTemplate>
+        <SkeletonTemplate isLoading={isLoading}>
+          <div>{`Updated on ${formatDate({
+            isoDate: shipment.updated_at,
+            timezone: user?.timezone,
+            format: 'full'
+          })}`}</div>
+          {!isEmpty(shipment.reference) && (
+            <div>
+              <Text variant='info'>Ref. {shipment.reference}</Text>
+            </div>
+          )}
+        </SkeletonTemplate>
       }
       onGoBack={() => {
         goBack({
