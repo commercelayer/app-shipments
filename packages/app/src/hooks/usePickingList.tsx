@@ -33,6 +33,14 @@ function parcelsToStockLineItems(parcels: Parcel[]): StockLineItem[] {
  * @returns Array of StockLineItem resource
  */
 export function usePickingList(shipment: Shipment): StockLineItem[] {
+  const shipmentStockTransfers =
+    shipment.stock_transfers?.filter(
+      (stockTransfer) =>
+        stockTransfer.status !== 'completed' &&
+        stockTransfer.status !== 'cancelled' &&
+        stockTransfer.status !== 'draft'
+    ) ?? []
+
   return useMemo(
     () =>
       shipment.stock_line_items
@@ -46,8 +54,15 @@ export function usePickingList(shipment: Shipment): StockLineItem[] {
               (item) => item.sku_code === stockLineItem.sku_code
             )?.quantity ?? 0
 
+          const stockLineItemStockTransfer =
+            shipmentStockTransfers.filter(
+              (stockTransfer) =>
+                stockTransfer.sku_code === stockLineItem.sku_code
+            )[0] ?? undefined
+
           return {
             ...stockLineItem,
+            stockTransfer: stockLineItemStockTransfer,
             quantity: stockLineItem.quantity - parcelQuantity
           }
         })
