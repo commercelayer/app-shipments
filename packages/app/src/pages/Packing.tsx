@@ -48,8 +48,12 @@ export function Packing(): JSX.Element {
     return (
       <PageLayout
         title='Shipments'
-        onGoBack={() => {
-          setLocation(appRoutes.home.makePath())
+        navigationButton={{
+          onClick: () => {
+            setLocation(appRoutes.home.makePath())
+          },
+          label: 'Shipments',
+          icon: 'arrowLeft'
         }}
         mode={mode}
       >
@@ -80,8 +84,12 @@ export function Packing(): JSX.Element {
   return (
     <PageLayout
       title='Packing'
-      onGoBack={() => {
-        setLocation(appRoutes.details.makePath(shipmentId))
+      navigationButton={{
+        onClick: () => {
+          setLocation(appRoutes.details.makePath(shipmentId))
+        },
+        label: `Cancel`,
+        icon: 'x'
       }}
       mode={mode}
       gap='only-top'

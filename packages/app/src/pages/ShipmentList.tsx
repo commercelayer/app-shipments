@@ -28,8 +28,12 @@ export function ShipmentList(): JSX.Element {
       title={viewTitle ?? 'Shipments'}
       mode={mode}
       gap={isInViewPreset ? undefined : 'only-top'}
-      onGoBack={() => {
-        setLocation(appRoutes.home.makePath())
+      navigationButton={{
+        onClick: () => {
+          setLocation(appRoutes.home.makePath())
+        },
+        label: 'Shipments',
+        icon: 'arrowLeft'
       }}
     >
       <SearchWithNav

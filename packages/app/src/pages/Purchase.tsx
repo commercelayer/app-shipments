@@ -141,8 +141,12 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
     <PageLayout
       mode={mode}
       title='Select a shipping rate'
-      onGoBack={() => {
-        setLocation(appRoutes.details.makePath(shipmentId))
+      navigationButton={{
+        onClick: () => {
+          setLocation(appRoutes.details.makePath(shipmentId))
+        },
+        label: `Cancel`,
+        icon: 'x'
       }}
     >
       <SkeletonTemplate isLoading={!isReady}>
@@ -197,8 +201,12 @@ function NotAuthorized({ shipmentId }: { shipmentId: string }): JSX.Element {
   return (
     <PageLayout
       title='Select a shipping rate'
-      onGoBack={() => {
-        setLocation(appRoutes.home.makePath())
+      navigationButton={{
+        onClick: () => {
+          setLocation(appRoutes.home.makePath())
+        },
+        label: 'Shipments',
+        icon: 'arrowLeft'
       }}
       mode={mode}
     >

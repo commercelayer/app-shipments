@@ -12,14 +12,18 @@ export function Filters(): JSX.Element {
   return (
     <PageLayout
       title='Filters'
-      onGoBack={() => {
-        setLocation(
-          appRoutes.list.makePath(
-            adapters.adaptUrlQueryToUrlQuery({
-              queryString: location.search
-            })
+      navigationButton={{
+        onClick: () => {
+          setLocation(
+            appRoutes.list.makePath(
+              adapters.adaptUrlQueryToUrlQuery({
+                queryString: location.search
+              })
+            )
           )
-        )
+        },
+        label: 'Cancel',
+        icon: 'x'
       }}
     >
       <FiltersForm
