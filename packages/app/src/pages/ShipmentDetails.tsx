@@ -1,21 +1,26 @@
 import { ShipmentAddresses } from '#components/ShipmentAddresses'
 import { ShipmentDetailsContextMenu } from '#components/ShipmentDetailsContextMenu'
+import { ShipmentInfo } from '#components/ShipmentInfo'
 import { ShipmentPackingList } from '#components/ShipmentPackingList'
 import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
 import { useViewStatus } from '#hooks/useViewStatus'
+import { isMockedId } from '#mocks'
 import {
   Button,
   EmptyState,
   PageLayout,
+  ResourceTags,
   SkeletonTemplate,
   Spacer,
+  Text,
   formatDate,
   goBack,
   useTokenProvider
 } from '@commercelayer/app-elements'
+import isEmpty from 'lodash/isEmpty'
 import { Link, useLocation, useRoute } from 'wouter'
 
 export function ShipmentDetails(): JSX.Element {
@@ -72,11 +77,18 @@ export function ShipmentDetails(): JSX.Element {
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>
       }
       description={
-        <SkeletonTemplate isLoading={isLoading}>{`Updated on ${formatDate({
-          isoDate: shipment.updated_at,
-          timezone: user?.timezone,
-          format: 'full'
-        })}`}</SkeletonTemplate>
+        <SkeletonTemplate isLoading={isLoading}>
+          <div>{`Updated on ${formatDate({
+            isoDate: shipment.updated_at,
+            timezone: user?.timezone,
+            format: 'full'
+          })}`}</div>
+          {!isEmpty(shipment.reference) && (
+            <div>
+              <Text variant='info'>Ref. {shipment.reference}</Text>
+            </div>
+          )}
+        </SkeletonTemplate>
       }
       onGoBack={() => {
         goBack({
@@ -84,10 +96,28 @@ export function ShipmentDetails(): JSX.Element {
           defaultRelativePath: appRoutes.home.makePath()
         })
       }}
+      gap='only-top'
     >
       <SkeletonTemplate isLoading={isLoading}>
         <Spacer bottom='4'>
-          <ShipmentSteps shipment={shipment} />
+          {!isMockedId(shipment.id) && (
+            <Spacer top='6'>
+              <ResourceTags
+                resourceType='shipments'
+                resourceId={shipment.id}
+                overlay={{ title: 'Edit tags', description: pageTitle }}
+                onTagClick={(tagId) => {
+                  setLocation(appRoutes.list.makePath(`tags_id_in=${tagId}`))
+                }}
+              />
+            </Spacer>
+          )}
+          <Spacer top='14'>
+            <ShipmentSteps shipment={shipment} />
+          </Spacer>
+          <Spacer top='14'>
+            <ShipmentInfo shipment={shipment} />
+          </Spacer>
           <Spacer top='14'>
             <ShipmentPackingList shipment={shipment} />
           </Spacer>

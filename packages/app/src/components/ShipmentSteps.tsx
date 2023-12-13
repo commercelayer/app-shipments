@@ -33,10 +33,12 @@ export const ShipmentSteps = withSkeletonTemplate<Props>(
         <div>
           <Spacer bottom='2'>
             <Text size='small' tag='div' variant='info' weight='semibold'>
-              Shipping method
+              Origin
             </Text>
           </Spacer>
-          {shipment.shipping_method?.name}
+          <Text weight='semibold' className='text-[18px]'>
+            {shipment.stock_location?.name}
+          </Text>
         </div>
       </Stack>
     )
