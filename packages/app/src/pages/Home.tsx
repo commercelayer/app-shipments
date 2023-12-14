@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   PageLayout,
+  SkeletonTemplate,
   Spacer,
   Text,
   useResourceFilters,
@@ -15,6 +16,7 @@ import type { Shipment } from '@commercelayer/sdk'
 import { useCallback } from 'react'
 import { Link, useLocation } from 'wouter'
 import { useSearch } from 'wouter/use-location'
+import { useListCounters } from '../metricsApi/useListCounters'
 
 export function Home(): JSX.Element {
   const {
@@ -24,6 +26,8 @@ export function Home(): JSX.Element {
 
   const search = useSearch()
   const [, setLocation] = useLocation()
+
+  const { data: counters, isLoading: isLoadingCounters } = useListCounters()
 
   const { SearchWithNav, adapters } = useResourceFilters({
     instructions: filtersInstructions
@@ -62,51 +66,61 @@ export function Home(): JSX.Element {
         queryString={search}
       />
 
-      <Spacer bottom='14'>
-        <List title='Pending'>
-          <Link href={getPresetUrlByStatus('picking')}>
-            <ListItem
-              tag='a'
-              icon={<Icon name='arrowDown' background='orange' gap='small' />}
-            >
-              <Text weight='semibold'>Picking</Text>
-              <Icon name='caretRight' />
-            </ListItem>
-          </Link>
+      <SkeletonTemplate isLoading={isLoadingCounters}>
+        <Spacer bottom='14'>
+          <List title='Pending'>
+            <Link href={getPresetUrlByStatus('picking')}>
+              <ListItem
+                tag='a'
+                icon={<Icon name='arrowDown' background='orange' gap='small' />}
+              >
+                <Text weight='semibold'>
+                  Picking {formatCounter(counters?.picking)}
+                </Text>
+                <Icon name='caretRight' />
+              </ListItem>
+            </Link>
 
-          <Link href={getPresetUrlByStatus('packing')}>
-            <ListItem
-              tag='a'
-              icon={<Icon name='package' background='orange' gap='small' />}
-            >
-              <Text weight='semibold'>Packing</Text>
-              <Icon name='caretRight' />
-            </ListItem>
-          </Link>
+            <Link href={getPresetUrlByStatus('packing')}>
+              <ListItem
+                tag='a'
+                icon={<Icon name='package' background='orange' gap='small' />}
+              >
+                <Text weight='semibold'>
+                  Packing {formatCounter(counters?.packing)}
+                </Text>
+                <Icon name='caretRight' />
+              </ListItem>
+            </Link>
 
-          <Link href={getPresetUrlByStatus('ready_to_ship')}>
-            <ListItem
-              tag='a'
-              icon={
-                <Icon name='arrowUpRight' background='orange' gap='small' />
-              }
-            >
-              <Text weight='semibold'>Ready to ship</Text>
-              <Icon name='caretRight' />
-            </ListItem>
-          </Link>
+            <Link href={getPresetUrlByStatus('ready_to_ship')}>
+              <ListItem
+                tag='a'
+                icon={
+                  <Icon name='arrowUpRight' background='orange' gap='small' />
+                }
+              >
+                <Text weight='semibold'>
+                  Ready to ship {formatCounter(counters?.readyToShip)}
+                </Text>
+                <Icon name='caretRight' />
+              </ListItem>
+            </Link>
 
-          <Link href={getPresetUrlByStatus('on_hold')}>
-            <ListItem
-              tag='a'
-              icon={<Icon name='hourglass' background='orange' gap='small' />}
-            >
-              <Text weight='semibold'>On hold</Text>
-              <Icon name='caretRight' />
-            </ListItem>
-          </Link>
-        </List>
-      </Spacer>
+            <Link href={getPresetUrlByStatus('on_hold')}>
+              <ListItem
+                tag='a'
+                icon={<Icon name='hourglass' background='orange' gap='small' />}
+              >
+                <Text weight='semibold'>
+                  On hold {formatCounter(counters?.onHold)}
+                </Text>
+                <Icon name='caretRight' />
+              </ListItem>
+            </Link>
+          </List>
+        </Spacer>
+      </SkeletonTemplate>
 
       <Spacer bottom='14'>
         <List title='Browse'>
@@ -123,4 +137,8 @@ export function Home(): JSX.Element {
       </Spacer>
     </PageLayout>
   )
+}
+
+function formatCounter(counter = 0): string {
+  return `(${Intl.NumberFormat().format(counter)})`
 }
