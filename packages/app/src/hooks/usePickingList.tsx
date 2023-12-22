@@ -1,6 +1,5 @@
 import type { Parcel, Shipment, StockLineItem } from '@commercelayer/sdk'
 import { useMemo } from 'react'
-import { useActiveStockTransfers } from './useActiveStockTransfers'
 
 function parcelsToStockLineItems(parcels: Parcel[]): StockLineItem[] {
   const stockLineItems: Record<string, StockLineItem> = {}
@@ -34,8 +33,6 @@ function parcelsToStockLineItems(parcels: Parcel[]): StockLineItem[] {
  * @returns Array of StockLineItem resource
  */
 export function usePickingList(shipment: Shipment): StockLineItem[] {
-  const activeStockTransfers = useActiveStockTransfers(shipment)
-
   return useMemo(
     () =>
       shipment.stock_line_items
@@ -49,15 +46,8 @@ export function usePickingList(shipment: Shipment): StockLineItem[] {
               (item) => item.sku_code === stockLineItem.sku_code
             )?.quantity ?? 0
 
-          const stockLineItemStockTransfer =
-            activeStockTransfers.filter(
-              (stockTransfer) =>
-                stockTransfer.sku_code === stockLineItem.sku_code
-            )[0] ?? undefined
-
           return {
             ...stockLineItem,
-            stockTransfer: stockLineItemStockTransfer,
             quantity: stockLineItem.quantity - parcelQuantity
           }
         })

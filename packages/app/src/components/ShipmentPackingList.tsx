@@ -2,6 +2,7 @@ import { ShipmentProgress } from '#components/ShipmentProgress'
 import { appRoutes } from '#data/routes'
 import { usePickingList } from '#hooks/usePickingList'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
+import { useStockTransfersList } from '#hooks/useStockTransfersList'
 import { useTriggerAttribute } from '#hooks/useTriggerAttribute'
 import { useViewStatus } from '#hooks/useViewStatus'
 import {
@@ -26,6 +27,8 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
     const [, setLocation] = useLocation()
     const { trigger } = useTriggerAttribute(shipment.id)
     const pickingList = usePickingList(shipment)
+    const stockTransfersList = useStockTransfersList(shipment)
+    const stockItemsList = pickingList.concat(stockTransfersList)
     const viewStatus = useViewStatus(shipment)
 
     if (isLoading === true) {
@@ -35,7 +38,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
     return (
       <Section
         title={viewStatus.title}
-        border={pickingList.length > 0 ? undefined : 'none'}
+        border={stockItemsList.length > 0 ? undefined : 'none'}
         actionButton={
           viewStatus.headerAction == null ? null : (
             <Link href={appRoutes.packing.makePath(shipment.id)}>
@@ -52,8 +55,8 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
             <Hr />
           </>
         )}
-        <ResourceLineItems items={pickingList} />
-        <ParcelList shipment={shipment} showTitle={pickingList.length > 0} />
+        <ResourceLineItems items={stockItemsList} />
+        <ParcelList shipment={shipment} showTitle={stockItemsList.length > 0} />
         <ActionButtons
           actions={
             viewStatus.footerActions?.map(
