@@ -41,8 +41,12 @@ export function ShipmentDetails(): JSX.Element {
     return (
       <PageLayout
         title='Orders'
-        onGoBack={() => {
-          setLocation(appRoutes.home.makePath())
+        navigationButton={{
+          onClick: () => {
+            setLocation(appRoutes.home.makePath())
+          },
+          label: 'Shipments',
+          icon: 'arrowLeft'
         }}
         mode={mode}
       >
@@ -59,7 +63,7 @@ export function ShipmentDetails(): JSX.Element {
   }
 
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  const pageTitle = `${shipment.stock_location?.name} #${shipment.number}`
+  const pageTitle = `Shipment #${shipment.number}`
 
   return (
     <PageLayout
@@ -90,11 +94,15 @@ export function ShipmentDetails(): JSX.Element {
           )}
         </SkeletonTemplate>
       }
-      onGoBack={() => {
-        goBack({
-          setLocation,
-          defaultRelativePath: appRoutes.home.makePath()
-        })
+      navigationButton={{
+        onClick: () => {
+          goBack({
+            setLocation,
+            defaultRelativePath: appRoutes.home.makePath()
+          })
+        },
+        label: 'Shipments',
+        icon: 'arrowLeft'
       }}
       gap='only-top'
     >

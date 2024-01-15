@@ -2,12 +2,12 @@ import { getShipmentStatusName } from '#data/dictionaries'
 import { filtersInstructions } from '#data/filters'
 import { appRoutes } from '#data/routes'
 import {
-  Icon,
   List,
   ListItem,
   PageLayout,
   SkeletonTemplate,
   Spacer,
+  StatusIcon,
   Text,
   useResourceFilters,
   useTokenProvider
@@ -52,9 +52,13 @@ export function Home(): JSX.Element {
       title='Shipments'
       mode={mode}
       gap='only-top'
-      onGoBack={() => {
-        window.location.href =
-          dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
+      navigationButton={{
+        onClick: () => {
+          window.location.href =
+            dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
+        },
+        label: 'Hub',
+        icon: 'arrowLeft'
       }}
     >
       <SearchWithNav
@@ -72,24 +76,32 @@ export function Home(): JSX.Element {
             <Link href={getPresetUrlByStatus('picking')}>
               <ListItem
                 tag='a'
-                icon={<Icon name='arrowDown' background='orange' gap='small' />}
+                icon={
+                  <StatusIcon
+                    name='arrowDown'
+                    background='orange'
+                    gap='small'
+                  />
+                }
               >
                 <Text weight='semibold'>
                   Picking {formatCounter(counters?.picking)}
                 </Text>
-                <Icon name='caretRight' />
+                <StatusIcon name='caretRight' />
               </ListItem>
             </Link>
 
             <Link href={getPresetUrlByStatus('packing')}>
               <ListItem
                 tag='a'
-                icon={<Icon name='package' background='orange' gap='small' />}
+                icon={
+                  <StatusIcon name='package' background='orange' gap='small' />
+                }
               >
                 <Text weight='semibold'>
                   Packing {formatCounter(counters?.packing)}
                 </Text>
-                <Icon name='caretRight' />
+                <StatusIcon name='caretRight' />
               </ListItem>
             </Link>
 
@@ -97,25 +109,35 @@ export function Home(): JSX.Element {
               <ListItem
                 tag='a'
                 icon={
-                  <Icon name='arrowUpRight' background='orange' gap='small' />
+                  <StatusIcon
+                    name='arrowUpRight'
+                    background='orange'
+                    gap='small'
+                  />
                 }
               >
                 <Text weight='semibold'>
                   Ready to ship {formatCounter(counters?.readyToShip)}
                 </Text>
-                <Icon name='caretRight' />
+                <StatusIcon name='caretRight' />
               </ListItem>
             </Link>
 
             <Link href={getPresetUrlByStatus('on_hold')}>
               <ListItem
                 tag='a'
-                icon={<Icon name='hourglass' background='orange' gap='small' />}
+                icon={
+                  <StatusIcon
+                    name='hourglass'
+                    background='orange'
+                    gap='small'
+                  />
+                }
               >
                 <Text weight='semibold'>
                   On hold {formatCounter(counters?.onHold)}
                 </Text>
-                <Icon name='caretRight' />
+                <StatusIcon name='caretRight' />
               </ListItem>
             </Link>
           </List>
@@ -127,10 +149,12 @@ export function Home(): JSX.Element {
           <Link href={appRoutes.list.makePath()}>
             <ListItem
               tag='a'
-              icon={<Icon name='asterisk' background='black' gap='small' />}
+              icon={
+                <StatusIcon name='asterisk' background='black' gap='small' />
+              }
             >
               <Text weight='semibold'>All shipments</Text>
-              <Icon name='caretRight' />
+              <StatusIcon name='caretRight' />
             </ListItem>
           </Link>
         </List>

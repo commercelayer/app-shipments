@@ -10,6 +10,9 @@ export const shipmentIncludeAttribute = [
   'origin_address',
   'stock_line_items',
   'stock_line_items.sku',
+  'stock_transfers',
+  'stock_transfers.line_item', // Required to fill fake stock line items from stock transfers in picking list
+  'stock_transfers.origin_stock_location',
 
   'parcels',
   'parcels.package',

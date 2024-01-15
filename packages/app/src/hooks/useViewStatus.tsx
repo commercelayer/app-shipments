@@ -2,6 +2,7 @@ import { hasBeenPurchased } from '@commercelayer/app-elements'
 import type { ActionButtonsProps } from '@commercelayer/app-elements/dist/ui/composite/ActionButtons'
 import type { Shipment, ShipmentUpdate } from '@commercelayer/sdk'
 import { useMemo } from 'react'
+import { useActiveStockTransfers } from './useActiveStockTransfers'
 import { usePickingList } from './usePickingList'
 
 type TriggerAttribute =
@@ -22,6 +23,7 @@ interface ViewStatus {
 
 export function useViewStatus(shipment: Shipment): ViewStatus {
   const pickingList = usePickingList(shipment)
+  const activeStockTransfers = useActiveStockTransfers(shipment)
   const hasPickingItems = pickingList.length > 0
   const hasParcels = shipment.parcels != null && shipment.parcels.length > 0
   const hasCarrierAccounts =
@@ -110,9 +112,10 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
         break
 
       case 'on_hold':
-        result.footerActions = [
-          { label: 'Start picking', triggerAttribute: '_picking' }
-        ]
+        result.footerActions =
+          activeStockTransfers.length === 0
+            ? [{ label: 'Start picking', triggerAttribute: '_picking' }]
+            : []
         break
 
       default:

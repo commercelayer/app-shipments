@@ -1,13 +1,13 @@
 import { getShipmentStatusName } from '#data/dictionaries'
 import type { BadgeProps } from '@commercelayer/app-elements'
-import type { IconProps } from '@commercelayer/app-elements/dist/ui/atoms/Icon'
+import type { StatusIconProps } from '@commercelayer/app-elements/dist/ui/atoms/StatusIcon'
 import type { Shipment } from '@commercelayer/sdk'
 
 interface DisplayStatus {
   status: Shipment['status']
   label: string
-  icon: IconProps['name']
-  color: IconProps['background']
+  icon: StatusIconProps['name']
+  color: StatusIconProps['background']
   badgeVariant: BadgeProps['variant']
 }
 

@@ -1,4 +1,5 @@
 import { getDisplayStatus } from '#data/status'
+import { useActiveStockTransfers } from '#hooks/useActiveStockTransfers'
 import {
   Badge,
   Spacer,
@@ -15,6 +16,7 @@ interface Props {
 export const ShipmentSteps = withSkeletonTemplate<Props>(
   ({ shipment }): JSX.Element => {
     const displayStatus = getDisplayStatus(shipment)
+    const activeStockTransfers = useActiveStockTransfers(shipment)
 
     return (
       <Stack>
@@ -25,9 +27,19 @@ export const ShipmentSteps = withSkeletonTemplate<Props>(
             </Text>
           </Spacer>
           {shipment.status !== undefined && (
-            <Badge variant={displayStatus.badgeVariant}>
-              {displayStatus.label.toUpperCase()}
-            </Badge>
+            <>
+              <Badge variant={displayStatus.badgeVariant}>
+                {displayStatus.label.toUpperCase()}
+              </Badge>
+              {shipment.status === 'on_hold' &&
+                activeStockTransfers.length > 0 && (
+                  <div className='mt-2'>
+                    <Text variant='warning' size='small' weight='semibold'>
+                      Awaiting stock transfers
+                    </Text>
+                  </div>
+                )}
+            </>
           )}
         </div>
         <div>
