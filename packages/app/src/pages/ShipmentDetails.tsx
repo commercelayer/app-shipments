@@ -21,7 +21,7 @@ import {
   useTokenProvider
 } from '@commercelayer/app-elements'
 import isEmpty from 'lodash/isEmpty'
-import { Link, useLocation, useRoute } from 'wouter'
+import { useLocation, useRoute } from 'wouter'
 
 export function ShipmentDetails(): JSX.Element {
   const {
@@ -43,9 +43,12 @@ export function ShipmentDetails(): JSX.Element {
         title='Orders'
         navigationButton={{
           onClick: () => {
-            setLocation(appRoutes.home.makePath())
+            goBack({
+              setLocation,
+              defaultRelativePath: appRoutes.home.makePath()
+            })
           },
-          label: 'Shipments',
+          label: 'Back',
           icon: 'arrowLeft'
         }}
         mode={mode}
@@ -53,9 +56,17 @@ export function ShipmentDetails(): JSX.Element {
         <EmptyState
           title='Not authorized'
           action={
-            <Link href={appRoutes.home.makePath()}>
-              <Button variant='primary'>Go back</Button>
-            </Link>
+            <Button
+              variant='primary'
+              onClick={() => {
+                goBack({
+                  setLocation,
+                  defaultRelativePath: appRoutes.home.makePath()
+                })
+              }}
+            >
+              Go back
+            </Button>
           }
         />
       </PageLayout>
@@ -101,7 +112,7 @@ export function ShipmentDetails(): JSX.Element {
             defaultRelativePath: appRoutes.home.makePath()
           })
         },
-        label: 'Shipments',
+        label: 'Back',
         icon: 'arrowLeft'
       }}
       gap='only-top'
