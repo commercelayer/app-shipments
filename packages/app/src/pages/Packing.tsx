@@ -62,8 +62,8 @@ export function Packing(): JSX.Element {
             !isValidStatus
               ? 'This shipment is not in packing status'
               : shipment.stock_location?.id == null
-              ? 'Missing stock_location'
-              : 'Not authorized'
+                ? 'Missing stock_location'
+                : 'Not authorized'
           }
           action={
             <Link

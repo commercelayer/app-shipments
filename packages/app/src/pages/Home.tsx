@@ -15,7 +15,7 @@ import {
 import type { Shipment } from '@commercelayer/sdk'
 import { useCallback } from 'react'
 import { Link, useLocation } from 'wouter'
-import { useSearch } from 'wouter/use-location'
+import { useSearch } from 'wouter/use-browser-location'
 import { useListCounters } from '../metricsApi/useListCounters'
 
 export function Home(): JSX.Element {
@@ -150,7 +150,11 @@ export function Home(): JSX.Element {
             <ListItem
               tag='a'
               icon={
-                <StatusIcon name='asterisk' background='black' gap='small' />
+                <StatusIcon
+                  name='asteriskSimple'
+                  background='black'
+                  gap='small'
+                />
               }
             >
               <Text weight='semibold'>All shipments</Text>
