@@ -73,7 +73,7 @@ export function Home(): JSX.Element {
       <SkeletonTemplate isLoading={isLoadingCounters}>
         <Spacer bottom='14'>
           <List title='Pending'>
-            <Link href={getPresetUrlByStatus('picking')}>
+            <Link href={getPresetUrlByStatus('picking')} asChild>
               <ListItem
                 tag='a'
                 icon={
@@ -91,7 +91,7 @@ export function Home(): JSX.Element {
               </ListItem>
             </Link>
 
-            <Link href={getPresetUrlByStatus('packing')}>
+            <Link href={getPresetUrlByStatus('packing')} asChild>
               <ListItem
                 tag='a'
                 icon={
@@ -105,7 +105,7 @@ export function Home(): JSX.Element {
               </ListItem>
             </Link>
 
-            <Link href={getPresetUrlByStatus('ready_to_ship')}>
+            <Link href={getPresetUrlByStatus('ready_to_ship')} asChild>
               <ListItem
                 tag='a'
                 icon={
@@ -123,7 +123,7 @@ export function Home(): JSX.Element {
               </ListItem>
             </Link>
 
-            <Link href={getPresetUrlByStatus('on_hold')}>
+            <Link href={getPresetUrlByStatus('on_hold')} asChild>
               <ListItem
                 tag='a'
                 icon={
@@ -146,7 +146,7 @@ export function Home(): JSX.Element {
 
       <Spacer bottom='14'>
         <List title='Browse'>
-          <Link href={appRoutes.list.makePath()}>
+          <Link href={appRoutes.list.makePath()} asChild>
             <ListItem
               tag='a'
               icon={
