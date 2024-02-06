@@ -42,7 +42,7 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
         actionButton={
           viewStatus.headerAction == null ? null : (
             <Link href={appRoutes.packing.makePath(shipment.id)}>
-              <a>{viewStatus.headerAction.label}</a>
+              {viewStatus.headerAction.label}
             </Link>
           )
         }

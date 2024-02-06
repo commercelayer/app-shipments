@@ -35,8 +35,8 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
       title: !hasPickingItems
         ? 'Parcels'
         : shipment.status === 'packing'
-        ? 'Packing'
-        : 'Picking list',
+          ? 'Packing'
+          : 'Picking list',
       progress: shipment.status === 'packing' && hasPickingItems
     }
 
