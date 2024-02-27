@@ -36,6 +36,7 @@ export function Home(): JSX.Element {
   const getPresetUrlByStatus = useCallback(
     (status: Shipment['status']): string => {
       return appRoutes.list.makePath(
+        {},
         adapters.adaptFormValuesToUrlQuery({
           formValues: {
             status_in: [status],
@@ -65,7 +66,7 @@ export function Home(): JSX.Element {
         hideFiltersNav
         onFilterClick={() => {}}
         onUpdate={(qs) => {
-          setLocation(appRoutes.list.makePath(qs))
+          setLocation(appRoutes.list.makePath({}, qs))
         }}
         queryString={search}
       />
@@ -146,7 +147,7 @@ export function Home(): JSX.Element {
 
       <Spacer bottom='14'>
         <List title='Browse'>
-          <Link href={appRoutes.list.makePath()} asChild>
+          <Link href={appRoutes.list.makePath({})} asChild>
             <ListItem
               tag='a'
               icon={

@@ -30,7 +30,7 @@ export function ShipmentList(): JSX.Element {
       gap={isInViewPreset ? undefined : 'only-top'}
       navigationButton={{
         onClick: () => {
-          setLocation(appRoutes.home.makePath())
+          setLocation(appRoutes.home.makePath({}))
         },
         label: 'Shipments',
         icon: 'arrowLeft'
@@ -44,7 +44,7 @@ export function ShipmentList(): JSX.Element {
           })
         }}
         onFilterClick={(queryString) => {
-          setLocation(appRoutes.filters.makePath(queryString))
+          setLocation(appRoutes.filters.makePath({}, queryString))
         }}
         hideFiltersNav={isInViewPreset}
         hideSearchBar={isInViewPreset}
