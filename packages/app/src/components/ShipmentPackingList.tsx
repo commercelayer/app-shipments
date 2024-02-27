@@ -41,7 +41,9 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
         border={stockItemsList.length > 0 ? undefined : 'none'}
         actionButton={
           viewStatus.headerAction == null ? null : (
-            <Link href={appRoutes.packing.makePath(shipment.id)}>
+            <Link
+              href={appRoutes.packing.makePath({ shipmentId: shipment.id })}
+            >
               {viewStatus.headerAction.label}
             </Link>
           )
@@ -70,12 +72,16 @@ export const ShipmentPackingList = withSkeletonTemplate<Props>(
                       await trigger('_packing')
                     }
 
-                    setLocation(appRoutes.packing.makePath(shipment.id))
+                    setLocation(
+                      appRoutes.packing.makePath({ shipmentId: shipment.id })
+                    )
                     return
                   }
 
                   if (triggerAttribute === '_get_rates') {
-                    setLocation(appRoutes.purchase.makePath(shipment.id))
+                    setLocation(
+                      appRoutes.purchase.makePath({ shipmentId: shipment.id })
+                    )
                     return
                   }
 

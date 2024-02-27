@@ -143,7 +143,7 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
       title='Select a shipping rate'
       navigationButton={{
         onClick: () => {
-          setLocation(appRoutes.details.makePath(shipmentId))
+          setLocation(appRoutes.details.makePath({ shipmentId }))
         },
         label: `Cancel`,
         icon: 'x'
@@ -179,7 +179,7 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
                       return await mutateShipment()
                     })
                     .then(async () => {
-                      setLocation(appRoutes.details.makePath(shipmentId))
+                      setLocation(appRoutes.details.makePath({ shipmentId }))
                     })
                 }
               }}
@@ -203,7 +203,7 @@ function NotAuthorized({ shipmentId }: { shipmentId: string }): JSX.Element {
       title='Select a shipping rate'
       navigationButton={{
         onClick: () => {
-          setLocation(appRoutes.home.makePath())
+          setLocation(appRoutes.home.makePath({}))
         },
         label: 'Shipments',
         icon: 'arrowLeft'
@@ -213,7 +213,7 @@ function NotAuthorized({ shipmentId }: { shipmentId: string }): JSX.Element {
       <EmptyState
         title='Not authorized'
         action={
-          <Link href={appRoutes.details.makePath(shipmentId)}>
+          <Link href={appRoutes.details.makePath({ shipmentId })}>
             <Button variant='primary'>Go back</Button>
           </Link>
         }

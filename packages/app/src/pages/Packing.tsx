@@ -31,7 +31,7 @@ export function Packing(): JSX.Element {
 
   useEffect(() => {
     if (pickingList.length === 0 && !isMock(shipment)) {
-      setLocation(appRoutes.details.makePath(shipmentId))
+      setLocation(appRoutes.details.makePath({ shipmentId }))
     }
   }, [pickingList])
 
@@ -50,7 +50,7 @@ export function Packing(): JSX.Element {
         title='Shipments'
         navigationButton={{
           onClick: () => {
-            setLocation(appRoutes.home.makePath())
+            setLocation(appRoutes.home.makePath({}))
           },
           label: 'Shipments',
           icon: 'arrowLeft'
@@ -69,8 +69,8 @@ export function Packing(): JSX.Element {
             <Link
               href={
                 shipmentId == null
-                  ? appRoutes.home.makePath()
-                  : appRoutes.details.makePath(shipmentId)
+                  ? appRoutes.home.makePath({})
+                  : appRoutes.details.makePath({ shipmentId })
               }
             >
               <Button variant='primary'>Go back</Button>
@@ -83,10 +83,11 @@ export function Packing(): JSX.Element {
 
   return (
     <PageLayout
+      overlay
       title='Packing'
       navigationButton={{
         onClick: () => {
-          setLocation(appRoutes.details.makePath(shipmentId))
+          setLocation(appRoutes.details.makePath({ shipmentId }))
         },
         label: `Cancel`,
         icon: 'x'

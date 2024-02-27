@@ -1,3 +1,5 @@
+import { createRoute } from '@commercelayer/app-elements'
+
 export type AppRoute = keyof typeof appRoutes
 
 // Object to be used as source of truth to handel application routes
@@ -5,34 +7,10 @@ export type AppRoute = keyof typeof appRoutes
 // a `path` property to be used as patter matching in <Route path> component
 // and `makePath` method to be used to generate the path used in navigation and links
 export const appRoutes = {
-  home: {
-    path: '/',
-    makePath: () => '/'
-  },
-  filters: {
-    path: '/filters',
-    makePath: (filters?: string) =>
-      hasFilterQuery(filters) ? `/filters/?${filters}` : `/filters`
-  },
-  list: {
-    path: '/list',
-    makePath: (filters?: string) =>
-      hasFilterQuery(filters) ? `/list/?${filters}` : `/list`
-  },
-  details: {
-    path: '/list/:shipmentId',
-    makePath: (shipmentId: string) => `/list/${shipmentId}`
-  },
-  packing: {
-    path: '/list/:shipmentId/packing',
-    makePath: (shipmentId: string) => `/list/${shipmentId}/packing`
-  },
-  purchase: {
-    path: '/list/:shipmentId/purchase',
-    makePath: (shipmentId: string) => `/list/${shipmentId}/purchase`
-  }
-}
-
-function hasFilterQuery(filters?: string): filters is string {
-  return Array.from(new URLSearchParams(filters)).length > 0
+  home: createRoute('/'),
+  list: createRoute('/list/'),
+  filters: createRoute('/filters/'),
+  details: createRoute('/list/:shipmentId/'),
+  packing: createRoute('/list/:shipmentId/packing/'),
+  purchase: createRoute('/list/:shipmentId/purchase/')
 }

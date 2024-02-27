@@ -45,7 +45,7 @@ export function ShipmentDetails(): JSX.Element {
           onClick: () => {
             goBack({
               setLocation,
-              defaultRelativePath: appRoutes.home.makePath()
+              defaultRelativePath: appRoutes.home.makePath({})
             })
           },
           label: 'Back',
@@ -61,7 +61,7 @@ export function ShipmentDetails(): JSX.Element {
               onClick={() => {
                 goBack({
                   setLocation,
-                  defaultRelativePath: appRoutes.home.makePath()
+                  defaultRelativePath: appRoutes.home.makePath({})
                 })
               }}
             >
@@ -109,7 +109,7 @@ export function ShipmentDetails(): JSX.Element {
         onClick: () => {
           goBack({
             setLocation,
-            defaultRelativePath: appRoutes.home.makePath()
+            defaultRelativePath: appRoutes.home.makePath({})
           })
         },
         label: 'Back',
@@ -126,7 +126,9 @@ export function ShipmentDetails(): JSX.Element {
                 resourceId={shipment.id}
                 overlay={{ title: 'Edit tags', description: pageTitle }}
                 onTagClick={(tagId) => {
-                  setLocation(appRoutes.list.makePath(`tags_id_in=${tagId}`))
+                  setLocation(
+                    appRoutes.list.makePath({}, `tags_id_in=${tagId}`)
+                  )
                 }}
               />
             </Spacer>
