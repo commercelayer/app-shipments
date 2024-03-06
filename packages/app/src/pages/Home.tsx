@@ -2,15 +2,14 @@ import { getShipmentStatusName } from '#data/dictionaries'
 import { filtersInstructions } from '#data/filters'
 import { appRoutes } from '#data/routes'
 import {
+  HomePageLayout,
   List,
   ListItem,
-  PageLayout,
   SkeletonTemplate,
   Spacer,
   StatusIcon,
   Text,
-  useResourceFilters,
-  useTokenProvider
+  useResourceFilters
 } from '@commercelayer/app-elements'
 import type { Shipment } from '@commercelayer/sdk'
 import { useCallback } from 'react'
@@ -19,11 +18,6 @@ import { useSearch } from 'wouter/use-browser-location'
 import { useListCounters } from '../metricsApi/useListCounters'
 
 export function Home(): JSX.Element {
-  const {
-    dashboardUrl,
-    settings: { mode }
-  } = useTokenProvider()
-
   const search = useSearch()
   const [, setLocation] = useLocation()
 
@@ -49,19 +43,7 @@ export function Home(): JSX.Element {
   )
 
   return (
-    <PageLayout
-      title='Shipments'
-      mode={mode}
-      gap='only-top'
-      navigationButton={{
-        onClick: () => {
-          window.location.href =
-            dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
-        },
-        label: 'Hub',
-        icon: 'arrowLeft'
-      }}
-    >
+    <HomePageLayout title='Shipments'>
       <SearchWithNav
         hideFiltersNav
         onFilterClick={() => {}}
@@ -164,7 +146,7 @@ export function Home(): JSX.Element {
           </Link>
         </List>
       </Spacer>
-    </PageLayout>
+    </HomePageLayout>
   )
 }
 

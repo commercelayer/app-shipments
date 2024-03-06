@@ -1,17 +1,21 @@
 import { presets, type ListType } from '#data/lists'
-import { useTokenProvider } from '@commercelayer/app-elements'
+import {
+  getLastYearIsoRange,
+  useTokenProvider
+} from '@commercelayer/app-elements'
 import useSWR, { type SWRResponse } from 'swr'
 import { metricsApiFetcher } from './fetcher'
-import { getLastYearIsoRange } from './utils'
 
 const fetchShipmentStats = async ({
   slug,
   accessToken,
-  filters
+  filters,
+  domain
 }: {
   slug: string
   accessToken: string
   filters: object
+  domain: string
 }): Promise<VndApiResponse<MetricsApiShipmentsBreakdownData>> =>
   await metricsApiFetcher<MetricsApiShipmentsBreakdownData>({
     endpoint: '/orders/breakdown',
@@ -25,20 +29,26 @@ const fetchShipmentStats = async ({
       },
       filter: {
         order: {
-          ...getLastYearIsoRange(new Date()),
+          ...getLastYearIsoRange({
+            now: new Date(),
+            showMilliseconds: false
+          }),
           date_field: 'updated_at'
         },
         ...filters
       }
-    }
+    },
+    domain
   })
 
 const fetchAllCounters = async ({
   slug,
-  accessToken
+  accessToken,
+  domain
 }: {
   slug: string
   accessToken: string
+  domain: string
 }): Promise<{
   picking: number
   packing: number
@@ -49,6 +59,7 @@ const fetchAllCounters = async ({
   const listsStatuses = lists.map((listType) => presets[listType].status_eq)
 
   const allStats = await fetchShipmentStats({
+    domain,
     slug,
     accessToken,
     filters: {
@@ -77,12 +88,13 @@ export function useListCounters(): SWRResponse<{
   onHold: number
 }> {
   const {
-    settings: { accessToken, organizationSlug }
+    settings: { accessToken, organizationSlug, domain }
   } = useTokenProvider()
 
   const swrResponse = useSWR(
     {
       slug: organizationSlug,
+      domain,
       accessToken
     },
     fetchAllCounters,
