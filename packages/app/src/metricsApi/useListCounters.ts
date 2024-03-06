@@ -1,8 +1,10 @@
 import { presets, type ListType } from '#data/lists'
-import { useTokenProvider } from '@commercelayer/app-elements'
+import {
+  getLastYearIsoRange,
+  useTokenProvider
+} from '@commercelayer/app-elements'
 import useSWR, { type SWRResponse } from 'swr'
 import { metricsApiFetcher } from './fetcher'
-import { getLastYearIsoRange } from './utils'
 
 const fetchShipmentStats = async ({
   slug,
@@ -27,7 +29,10 @@ const fetchShipmentStats = async ({
       },
       filter: {
         order: {
-          ...getLastYearIsoRange(new Date()),
+          ...getLastYearIsoRange({
+            now: new Date(),
+            showMilliseconds: false
+          }),
           date_field: 'updated_at'
         },
         ...filters
