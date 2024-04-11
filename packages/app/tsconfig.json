@@ -52,6 +52,7 @@
     "global.d.ts",
     "src",
     "*.config.ts",
+    "*.config.mts",
     "*.config.js",
     "*.config.cjs",
     ".eslintrc.cjs",

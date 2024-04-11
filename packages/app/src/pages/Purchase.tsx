@@ -99,7 +99,6 @@ function PurchaseShipment({ shipmentId }: { shipmentId: string }): JSX.Element {
         value: rate.id,
         content: (
           <ListItem
-            tag='div'
             alignItems='top'
             alignIcon='center'
             padding='none'

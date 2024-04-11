@@ -12,6 +12,7 @@ import {
   Button,
   EmptyState,
   PageLayout,
+  ResourceMetadata,
   ResourceTags,
   SkeletonTemplate,
   Spacer,
@@ -145,6 +146,18 @@ export function ShipmentDetails(): JSX.Element {
           <Spacer top='14'>
             <ShipmentAddresses shipment={shipment} />
           </Spacer>
+          {!isMockedId(shipment.id) && (
+            <Spacer top='14'>
+              <ResourceMetadata
+                resourceType='shipments'
+                resourceId={shipment.id}
+                overlay={{
+                  title: pageTitle
+                }}
+                mode='simple'
+              />
+            </Spacer>
+          )}
           <Spacer top='14'>
             <ShipmentTimeline shipment={shipment} />
           </Spacer>
