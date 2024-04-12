@@ -58,7 +58,6 @@ export function Home(): JSX.Element {
           <List title='Pending'>
             <Link href={getPresetUrlByStatus('picking')} asChild>
               <ListItem
-                tag='a'
                 icon={
                   <StatusIcon
                     name='arrowDown'
@@ -76,7 +75,6 @@ export function Home(): JSX.Element {
 
             <Link href={getPresetUrlByStatus('packing')} asChild>
               <ListItem
-                tag='a'
                 icon={
                   <StatusIcon name='package' background='orange' gap='small' />
                 }
@@ -90,7 +88,6 @@ export function Home(): JSX.Element {
 
             <Link href={getPresetUrlByStatus('ready_to_ship')} asChild>
               <ListItem
-                tag='a'
                 icon={
                   <StatusIcon
                     name='arrowUpRight'
@@ -108,7 +105,6 @@ export function Home(): JSX.Element {
 
             <Link href={getPresetUrlByStatus('on_hold')} asChild>
               <ListItem
-                tag='a'
                 icon={
                   <StatusIcon
                     name='hourglass'
@@ -131,7 +127,6 @@ export function Home(): JSX.Element {
         <List title='Browse'>
           <Link href={appRoutes.list.makePath({})} asChild>
             <ListItem
-              tag='a'
               icon={
                 <StatusIcon
                   name='asteriskSimple'
