@@ -6,12 +6,12 @@ import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
-import { useViewStatus } from '#hooks/useViewStatus'
 import { isMockedId } from '#mocks'
 import {
   Button,
   EmptyState,
   PageLayout,
+  ResourceMetadata,
   ResourceTags,
   SkeletonTemplate,
   Spacer,
@@ -35,7 +35,6 @@ export function ShipmentDetails(): JSX.Element {
   const shipmentId = params?.shipmentId ?? ''
 
   const { shipment, isLoading } = useShipmentDetails(shipmentId)
-  const viewStatus = useViewStatus(shipment)
 
   if (shipmentId === undefined || !canUser('read', 'orders')) {
     return (
@@ -79,15 +78,7 @@ export function ShipmentDetails(): JSX.Element {
   return (
     <PageLayout
       mode={mode}
-      actionButton={
-        viewStatus.contextActions != null &&
-        viewStatus.contextActions.length > 0 && (
-          <ShipmentDetailsContextMenu
-            shipment={shipment}
-            actions={viewStatus.contextActions ?? []}
-          />
-        )
-      }
+      actionButton={<ShipmentDetailsContextMenu shipment={shipment} />}
       title={
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>
       }
@@ -145,6 +136,18 @@ export function ShipmentDetails(): JSX.Element {
           <Spacer top='14'>
             <ShipmentAddresses shipment={shipment} />
           </Spacer>
+          {!isMockedId(shipment.id) && (
+            <Spacer top='14'>
+              <ResourceMetadata
+                resourceType='shipments'
+                resourceId={shipment.id}
+                overlay={{
+                  title: pageTitle
+                }}
+                mode='simple'
+              />
+            </Spacer>
+          )}
           <Spacer top='14'>
             <ShipmentTimeline shipment={shipment} />
           </Spacer>
