@@ -35,7 +35,7 @@ export const ShipmentDetailsContextMenu: React.FC<{
     )) ?? []
   dropdownItems.push(
     <DropdownItem
-      label='Metadata'
+      label='Set metadata'
       onClick={() => {
         showEditMetadataOverlay()
       }}
