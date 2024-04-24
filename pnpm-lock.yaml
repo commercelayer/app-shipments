@@ -28,8 +28,8 @@ importers:
   packages/app:
     dependencies:
       '@commercelayer/app-elements':
-        specifier: ^1.22.4
-        version: 1.22.4(@commercelayer/sdk@5.37.0)(query-string@9.0.0)(react-dom@18.2.0(react@18.2.0))(react-gtm-module@2.0.11)(react-hook-form@7.51.2(react@18.2.0))(react@18.2.0)(wouter@3.1.2(react@18.2.0))
+        specifier: ^1.23.3
+        version: 1.23.3(@commercelayer/sdk@5.37.0)(query-string@9.0.0)(react-dom@18.2.0(react@18.2.0))(react-gtm-module@2.0.11)(react-hook-form@7.51.2(react@18.2.0))(react@18.2.0)(wouter@3.1.2(react@18.2.0))
       '@commercelayer/sdk':
         specifier: 5.37.0
         version: 5.37.0
@@ -245,8 +245,8 @@ packages:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
 
-  '@commercelayer/app-elements@1.22.4':
-    resolution: {integrity: sha512-6EWEaRJpNZhEdDK2ENvhDvYdGybU8GZTK8GUt6eq3IO8ZFVwvLOPOPZHLsNBpbMJiqnbJBAZgyZnLysK0434Jw==}
+  '@commercelayer/app-elements@1.23.3':
+    resolution: {integrity: sha512-b8GB9dBMXuByGsYYL/eM1rKoWwmwHxXqveVphpakOqgSyNhvwjPdR8nJa0TTi0YNIA51vyb1oUsy2tHJ/1qssg==}
     engines: {node: '>=18', pnpm: '>=7'}
     peerDependencies:
       '@commercelayer/sdk': ^5.x
@@ -5052,7 +5052,7 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@commercelayer/app-elements@1.22.4(@commercelayer/sdk@5.37.0)(query-string@9.0.0)(react-dom@18.2.0(react@18.2.0))(react-gtm-module@2.0.11)(react-hook-form@7.51.2(react@18.2.0))(react@18.2.0)(wouter@3.1.2(react@18.2.0))':
+  '@commercelayer/app-elements@1.23.3(@commercelayer/sdk@5.37.0)(query-string@9.0.0)(react-dom@18.2.0(react@18.2.0))(react-gtm-module@2.0.11)(react-hook-form@7.51.2(react@18.2.0))(react@18.2.0)(wouter@3.1.2(react@18.2.0))':
     dependencies:
       '@commercelayer/sdk': 5.37.0
       '@types/lodash': 4.17.0
