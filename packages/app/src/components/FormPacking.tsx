@@ -93,14 +93,16 @@ export function FormPacking({
               .watch('items')
               .reduce((acc, i) => acc + i.quantity, 0)}`}
       </Button>
-      <HookedValidationApiError
-        apiError={apiError}
-        fieldMap={{
-          package: 'packageId',
-          stock_line_item: 'items',
-          unit_of_weight: 'unitOfWeight'
-        }}
-      />
+      <Spacer top='2'>
+        <HookedValidationApiError
+          apiError={apiError}
+          fieldMap={{
+            package: 'packageId',
+            stock_line_item: 'items',
+            unit_of_weight: 'unitOfWeight'
+          }}
+        />
+      </Spacer>
     </HookedForm>
   )
 }
