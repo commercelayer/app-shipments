@@ -111,6 +111,17 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
             ]
         break
 
+      case 'shipped':
+        result.contextActions = []
+        result.footerActions = [
+          {
+            label: 'Mark as delivered',
+            // @ts-expect-error waiting for SDK types to be updated
+            triggerAttribute: '_deliver'
+          }
+        ]
+        break
+
       case 'on_hold':
         result.footerActions =
           activeStockTransfers.length === 0
