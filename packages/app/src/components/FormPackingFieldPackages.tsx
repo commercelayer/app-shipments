@@ -114,11 +114,9 @@ function InputSelectPackages({
 function makePackageQuery(
   stockLocationId: string,
   hint?: string
-): QueryParamsList {
+): QueryParamsList<Package> {
   return {
-    fields: {
-      packages: ['id', 'name', 'width', 'length', 'height', 'unit_of_length']
-    },
+    fields: ['id', 'name', 'width', 'length', 'height', 'unit_of_length'],
     filters: {
       stock_location_id_eq: stockLocationId,
       ...(!isEmpty(hint) && { name_cont: hint })
