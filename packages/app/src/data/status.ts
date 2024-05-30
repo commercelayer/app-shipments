@@ -58,6 +58,16 @@ export function getDisplayStatus(shipment: Shipment): DisplayStatus {
         badgeVariant: 'success-solid'
       }
 
+    // @ts-expect-error waiting for new types from SDK
+    case 'delivered':
+      return {
+        status: shipment.status,
+        label: getShipmentStatusName(shipment.status),
+        icon: 'check',
+        color: 'green',
+        badgeVariant: 'success-solid'
+      }
+
     default:
       return {
         status: shipment.status,
