@@ -1,11 +1,12 @@
-import { getDisplayStatus } from '#data/status'
 import { useActiveStockTransfers } from '#hooks/useActiveStockTransfers'
 import {
   Badge,
+  getShipmentDisplayStatus,
   Spacer,
   Stack,
   Text,
-  withSkeletonTemplate
+  withSkeletonTemplate,
+  type BadgeProps
 } from '@commercelayer/app-elements'
 import type { Shipment } from '@commercelayer/sdk'
 
@@ -15,7 +16,7 @@ interface Props {
 
 export const ShipmentSteps = withSkeletonTemplate<Props>(
   ({ shipment }): JSX.Element => {
-    const displayStatus = getDisplayStatus(shipment)
+    const displayStatus = getShipmentDisplayStatus(shipment)
     const activeStockTransfers = useActiveStockTransfers(shipment)
 
     return (
@@ -28,7 +29,7 @@ export const ShipmentSteps = withSkeletonTemplate<Props>(
           </Spacer>
           {shipment.status !== undefined && (
             <>
-              <Badge variant={displayStatus.badgeVariant}>
+              <Badge variant={getBadgeVariant(shipment)}>
                 {displayStatus.label.toUpperCase()}
               </Badge>
               {shipment.status === 'on_hold' &&
@@ -56,3 +57,20 @@ export const ShipmentSteps = withSkeletonTemplate<Props>(
     )
   }
 )
+
+function getBadgeVariant(shipment: Shipment): BadgeProps['variant'] {
+  switch (shipment.status) {
+    case 'picking':
+    case 'ready_to_ship':
+    case 'on_hold':
+      return 'warning-solid'
+
+    // @ts-expect-error waiting for new types from SDK
+    case 'delivered':
+    case 'shipped':
+      return 'success-solid'
+
+    default:
+      return 'secondary-solid'
+  }
+}
