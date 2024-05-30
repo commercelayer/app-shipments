@@ -9,9 +9,7 @@ import {
   useCoreSdkProvider,
   type InputSelectValue
 } from '@commercelayer/app-elements'
-import type { Package } from '@commercelayer/sdk'
-import type { QueryParamsList } from '@commercelayer/sdk/lib/cjs/query'
-import type { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import type { ListResponse, Package, QueryParamsList } from '@commercelayer/sdk'
 import isEmpty from 'lodash/isEmpty'
 import { useCallback } from 'react'
 import { makePackage } from 'src/mocks/resources/packages'
@@ -116,7 +114,7 @@ function InputSelectPackages({
 function makePackageQuery(
   stockLocationId: string,
   hint?: string
-): QueryParamsList {
+): QueryParamsList<Package> {
   return {
     fields: ['id', 'name', 'width', 'length', 'height', 'unit_of_length'],
     filters: {

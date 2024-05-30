@@ -1,11 +1,11 @@
 import { ShipmentAddresses } from '#components/ShipmentAddresses'
-import { ShipmentDetailsContextMenu } from '#components/ShipmentDetailsContextMenu'
 import { ShipmentInfo } from '#components/ShipmentInfo'
 import { ShipmentPackingList } from '#components/ShipmentPackingList'
 import { ShipmentSteps } from '#components/ShipmentSteps'
 import { ShipmentTimeline } from '#components/ShipmentTimeline'
 import { appRoutes } from '#data/routes'
 import { useShipmentDetails } from '#hooks/useShipmentDetails'
+import { useShipmentToolbar } from '#hooks/useShipmentToolbar'
 import { isMockedId } from '#mocks'
 import {
   Button,
@@ -35,6 +35,7 @@ export function ShipmentDetails(): JSX.Element {
   const shipmentId = params?.shipmentId ?? ''
 
   const { shipment, isLoading } = useShipmentDetails(shipmentId)
+  const pageToolbar = useShipmentToolbar({ shipment })
 
   if (shipmentId === undefined || !canUser('read', 'orders')) {
     return (
@@ -78,7 +79,7 @@ export function ShipmentDetails(): JSX.Element {
   return (
     <PageLayout
       mode={mode}
-      actionButton={<ShipmentDetailsContextMenu shipment={shipment} />}
+      toolbar={pageToolbar.props}
       title={
         <SkeletonTemplate isLoading={isLoading}>{pageTitle}</SkeletonTemplate>
       }
@@ -109,6 +110,7 @@ export function ShipmentDetails(): JSX.Element {
       gap='only-top'
     >
       <SkeletonTemplate isLoading={isLoading}>
+        <pageToolbar.Components />
         <Spacer bottom='4'>
           {!isMockedId(shipment.id) && (
             <Spacer top='6'>
