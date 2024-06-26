@@ -7,7 +7,6 @@ const allowedStatuses: Array<Shipment['status']> = [
   'packing',
   'ready_to_ship',
   'shipped',
-  // @ts-expect-error waiting for new types from SDK
   'delivered',
   'on_hold'
 ]

@@ -65,7 +65,6 @@ function getBadgeVariant(shipment: Shipment): BadgeProps['variant'] {
     case 'on_hold':
       return 'warning-solid'
 
-    // @ts-expect-error waiting for new types from SDK
     case 'delivered':
     case 'shipped':
       return 'success-solid'

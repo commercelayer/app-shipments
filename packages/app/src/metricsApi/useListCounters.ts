@@ -1,6 +1,6 @@
 import { presets, type ListType } from '#data/lists'
 import {
-  getLastYearIsoRange,
+  makeDateYearsRange,
   useTokenProvider
 } from '@commercelayer/app-elements'
 import useSWR, { type SWRResponse } from 'swr'
@@ -29,8 +29,9 @@ const fetchShipmentStats = async ({
       },
       filter: {
         order: {
-          ...getLastYearIsoRange({
+          ...makeDateYearsRange({
             now: new Date(),
+            yearsAgo: 1,
             showMilliseconds: false
           }),
           date_field: 'updated_at'

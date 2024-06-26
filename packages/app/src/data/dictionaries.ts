@@ -10,7 +10,6 @@ export function getShipmentStatusName(status: Shipment['status']): string {
     ready_to_ship: 'Ready to ship',
     shipped: 'Shipped',
     on_hold: 'On hold',
-    // @ts-expect-error waiting for new types from SDK
     delivered: 'Delivered'
   }
 
