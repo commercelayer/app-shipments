@@ -116,7 +116,6 @@ export function useViewStatus(shipment: Shipment): ViewStatus {
         result.footerActions = [
           {
             label: 'Mark as delivered',
-            // @ts-expect-error waiting for SDK types to be updated
             triggerAttribute: '_deliver'
           }
         ]
